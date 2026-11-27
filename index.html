@@ -1,0 +1,2743 @@
+<!DOCTYPE html>
+<html lang="ru" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Синтаксис 9 | Помощник учителя русского языка</title>
+    <!-- Подключение шрифта Inter и JetBrains Mono для схем -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+    <!-- Подключение Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        slate: {
+                            950: '#070B14',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* CSS-переменные для Тёмной (по умолчанию) и Светлой темы */
+        :root, [data-theme="dark"] {
+            --bg-main: #070B14;
+            --bg-gradient: 
+                radial-gradient(circle at 15% 15%, rgba(99, 102, 241, 0.14) 0%, transparent 40%),
+                radial-gradient(circle at 85% 30%, rgba(6, 182, 212, 0.12) 0%, transparent 40%),
+                radial-gradient(circle at 50% 85%, rgba(168, 85, 247, 0.10) 0%, transparent 45%);
+            --text-primary: #F1F5F9;
+            --text-secondary: #CBD5E1;
+            --text-muted: #94A3B8;
+            --panel-bg: rgba(15, 23, 42, 0.72);
+            --card-bg: rgba(30, 41, 59, 0.50);
+            --card-hover: rgba(30, 41, 59, 0.75);
+            --surface-sub: rgba(15, 23, 42, 0.85);
+            --surface-nested: rgba(2, 6, 23, 0.78);
+            --border-color: rgba(255, 255, 255, 0.09);
+            --border-strong: rgba(99, 102, 241, 0.45);
+            --input-bg: rgba(15, 23, 42, 0.92);
+            --footer-bg: rgba(7, 11, 20, 0.92);
+            --shadow-panel: 0 25px 50px -12px rgba(0, 0, 0, 0.55);
+        }
+
+        [data-theme="light"] {
+            --bg-main: #F1F5F9;
+            --bg-gradient: 
+                radial-gradient(circle at 15% 15%, rgba(99, 102, 241, 0.08) 0%, transparent 45%),
+                radial-gradient(circle at 85% 30%, rgba(6, 182, 212, 0.08) 0%, transparent 45%),
+                radial-gradient(circle at 50% 85%, rgba(168, 85, 247, 0.06) 0%, transparent 50%);
+            --text-primary: #0F172A;
+            --text-secondary: #334155;
+            --text-muted: #64748B;
+            --panel-bg: rgba(255, 255, 255, 0.92);
+            --card-bg: #FFFFFF;
+            --card-hover: #F8FAFC;
+            --surface-sub: #F8FAFC;
+            --surface-nested: #F1F5F9;
+            --border-color: rgba(15, 23, 42, 0.11);
+            --border-strong: rgba(79, 70, 229, 0.45);
+            --input-bg: #FFFFFF;
+            --footer-bg: #FFFFFF;
+            --shadow-panel: 0 20px 35px -10px rgba(15, 23, 42, 0.08);
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-primary);
+            background-image: var(--bg-gradient);
+            background-attachment: fixed;
+            transition: background-color 0.25s ease, color 0.25s ease;
+        }
+
+        /* Стеклянные / адаптивные панели */
+        .glass-panel {
+            background: var(--panel-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-panel);
+            transition: background-color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--border-color);
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .glass-card:hover {
+            border-color: var(--border-strong);
+            background: var(--card-hover);
+        }
+
+        .theme-surface-sub {
+            background: var(--surface-sub);
+            border-color: var(--border-color);
+        }
+
+        .theme-surface-nested {
+            background: var(--surface-nested);
+            border-color: var(--border-color);
+        }
+
+        .theme-input {
+            background: var(--input-bg);
+            color: var(--text-primary);
+            border-color: var(--border-color);
+        }
+
+        .theme-footer {
+            background: var(--footer-bg);
+            border-color: var(--border-color);
+        }
+
+        /* Переопределение утилитарных цветов текста для светлой темы */
+        [data-theme="light"] .text-white {
+            color: #0F172A !important;
+        }
+        /* Исключения для кнопок и бейджей с ярким градиентным/цветным фоном */
+        [data-theme="light"] .keep-white,
+        [data-theme="light"] .keep-white * {
+            color: #FFFFFF !important;
+        }
+        [data-theme="light"] .text-slate-200 {
+            color: #1E293B !important;
+        }
+        [data-theme="light"] .text-slate-300 {
+            color: #334155 !important;
+        }
+        [data-theme="light"] .text-slate-400 {
+            color: #64748B !important;
+        }
+        [data-theme="light"] .text-slate-500 {
+            color: #64748B !important;
+        }
+        [data-theme="light"] .text-cyan-300,
+        [data-theme="light"] .text-cyan-400 {
+            color: #0284C7 !important;
+        }
+        [data-theme="light"] .text-indigo-300,
+        [data-theme="light"] .text-indigo-400 {
+            color: #4F46E5 !important;
+        }
+        [data-theme="light"] .text-purple-300,
+        [data-theme="light"] .text-purple-400 {
+            color: #7E22CE !important;
+        }
+        [data-theme="light"] .text-emerald-300,
+        [data-theme="light"] .text-emerald-400 {
+            color: #059669 !important;
+        }
+        [data-theme="light"] .text-rose-300 {
+            color: #E11D48 !important;
+        }
+        [data-theme="light"] .text-amber-400 {
+            color: #D97706 !important;
+        }
+        [data-theme="light"] .bg-slate-900\/60,
+        [data-theme="light"] .bg-slate-900\/80,
+        [data-theme="light"] .bg-slate-900\/90,
+        [data-theme="light"] .bg-slate-900,
+        [data-theme="light"] .bg-slate-950\/75,
+        [data-theme="light"] .bg-slate-950\/80,
+        [data-theme="light"] .bg-slate-950\/90 {
+            background-color: #F8FAFC !important;
+            border-color: rgba(15, 23, 42, 0.12) !important;
+        }
+        [data-theme="light"] .bg-slate-800,
+        [data-theme="light"] .bg-slate-800\/70,
+        [data-theme="light"] .bg-slate-800\/80 {
+            background-color: #E2E8F0 !important;
+            color: #0F172A !important;
+        }
+        [data-theme="light"] .bg-slate-800:hover,
+        [data-theme="light"] .bg-slate-800\/70:hover,
+        [data-theme="light"] .bg-slate-800\/80:hover {
+            background-color: #CBD5E1 !important;
+        }
+        [data-theme="light"] .border-white\/10,
+        [data-theme="light"] .border-white\/5,
+        [data-theme="light"] .border-white\/15 {
+            border-color: rgba(15, 23, 42, 0.11) !important;
+        }
+
+        /* Анимация парения маскота */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+        }
+        .animate-float {
+            animation: float 4s ease-in-out infinite;
+        }
+
+        /* Стилизация кастомного скроллбара */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-main);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #64748B;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #475569;
+        }
+
+        /* Инлайн-поле ввода для заданий "Вписать ответ" */
+        .inline-gap-input {
+            display: inline-block;
+            min-width: 110px;
+            max-width: 210px;
+            padding: 3px 10px;
+            margin: 2px 4px;
+            border-radius: 10px;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 700;
+            font-size: 0.95rem;
+            text-align: center;
+            border: 2px solid rgba(99, 102, 241, 0.55);
+            background: var(--input-bg);
+            color: var(--text-primary);
+            outline: none;
+            transition: all 0.2s ease;
+        }
+        .inline-gap-input:focus {
+            border-color: #06B6D4;
+            box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.2);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col antialiased selection:bg-indigo-500 selection:text-white">
+
+    <!-- ==================== ШАПКА САЙТА (HEADER) ==================== -->
+    <header class="sticky top-0 z-50 glass-panel border-b border-white/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-18 py-3">
+                
+                <!-- Логотип и название -->
+                <a href="#" onclick="showMainView(); return false;" class="flex items-center gap-3 group focus:outline-none">
+                    <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-indigo-500 via-purple-500 to-cyan-400 p-0.5 shadow-lg shadow-indigo-500/25 group-hover:scale-105 transition-transform">
+                        <div class="w-full h-full bg-slate-950 rounded-[14px] flex items-center justify-center">
+                            <svg class="w-6 h-6 text-cyan-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M4 7V4h16v3" />
+                                <path d="M9 20h6" />
+                                <path d="M12 4v16" />
+                                <circle cx="18" cy="17" r="2.5" class="text-indigo-400" fill="currentColor" />
+                            </svg>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <span class="font-extrabold text-lg sm:text-xl tracking-tight text-white">
+                                Синтаксис 9
+                            </span>
+                            <span class="hidden sm:inline-block text-[11px] font-mono uppercase tracking-wider px-2 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-400/20">
+                                1 четверть
+                            </span>
+                        </div>
+                        <p class="text-xs text-slate-400 hidden sm:block">Помощник учителя русского языка</p>
+                    </div>
+                </a>
+
+                <!-- Навигация (Десктоп) -->
+                <nav id="main-nav" class="hidden md:flex items-center gap-1 lg:gap-2 bg-slate-900/60 p-1.5 rounded-2xl border border-white/5">
+                    <a href="#hero-section" onclick="navigateToSection('hero-section')" class="px-3.5 py-2 rounded-xl text-sm font-medium text-slate-300 hover:text-white hover:bg-indigo-500/10 transition-colors">
+                        О проекте
+                    </a>
+                    <a href="#theory-section" onclick="navigateToSection('theory-section')" class="px-3.5 py-2 rounded-xl text-sm font-medium text-slate-300 hover:text-white hover:bg-indigo-500/10 transition-colors">
+                        Теория и видео
+                    </a>
+                    <a href="#practice-section" onclick="navigateToSection('practice-section')" class="px-3.5 py-2 rounded-xl text-sm font-medium text-slate-300 hover:text-white hover:bg-indigo-500/10 transition-colors">
+                        Практикум (90)
+                    </a>
+                    <a href="#footer-section" onclick="navigateToSection('footer-section')" class="px-3.5 py-2 rounded-xl text-sm font-medium text-slate-300 hover:text-white hover:bg-indigo-500/10 transition-colors">
+                        Контакты
+                    </a>
+                </nav>
+
+                <!-- Правая часть: Переключатель темы + Баллы + Кнопка Входа/Регистрации -->
+                <div class="flex items-center gap-2 sm:gap-2.5">
+                    <!-- Переключатель Светлой / Тёмной темы -->
+                    <button id="theme-toggle-btn" onclick="toggleTheme()" title="Переключить светлую/тёмную тему" aria-label="Переключить тему" class="p-2.5 rounded-xl bg-slate-800/80 hover:bg-slate-800 border border-white/10 text-slate-200 transition-all active:scale-95 flex items-center gap-1.5">
+                        <!-- Иконка солнца (показывается в тёмной теме) -->
+                        <svg id="icon-sun" class="w-5 h-5 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                        </svg>
+                        <!-- Иконка луны (показывается в светлой теме) -->
+                        <svg id="icon-moon" class="w-5 h-5 text-indigo-600 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                        </svg>
+                        <span id="theme-label" class="hidden xl:inline text-xs font-semibold">Светлая</span>
+                    </button>
+
+                    <!-- Бейдж прогресса -->
+                    <div class="hidden lg:flex items-center gap-1.5 px-3 py-2 rounded-xl bg-emerald-500/10 border border-emerald-500/25 text-emerald-300 text-xs font-medium">
+                        <span>Баллы:</span>
+                        <span id="header-score" class="font-mono font-bold text-sm text-emerald-400">0</span>
+                    </div>
+
+                    <!-- Контейнер кнопки авторизации -->
+                    <div id="auth-header-slot">
+                        <button onclick="showAuthView('login')" class="keep-white flex items-center gap-2 px-3.5 sm:px-4 py-2.5 rounded-xl bg-gradient-to-r from-indigo-600 to-cyan-600 hover:from-indigo-500 hover:to-cyan-500 text-white text-sm font-semibold shadow-lg shadow-indigo-600/25 transition-all active:scale-95">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                            </svg>
+                            <span class="hidden sm:inline">Вход / Регистрация</span>
+                            <span class="sm:hidden">Войти</span>
+                        </button>
+                    </div>
+
+                    <!-- Мобильное меню (кнопка) -->
+                    <button id="mobile-menu-btn" onclick="toggleMobileMenu()" class="md:hidden p-2.5 rounded-xl bg-slate-800/80 text-slate-300 hover:text-white border border-white/10" aria-label="Меню">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Мобильная навигация -->
+            <div id="mobile-menu" class="hidden md:hidden pb-4 pt-2 border-t border-white/10 space-y-1">
+                <a href="#hero-section" onclick="navigateToSection('hero-section'); toggleMobileMenu()" class="block px-4 py-2.5 rounded-xl text-sm font-medium text-slate-300 hover:bg-indigo-500/10 hover:text-white">О проекте</a>
+                <a href="#theory-section" onclick="navigateToSection('theory-section'); toggleMobileMenu()" class="block px-4 py-2.5 rounded-xl text-sm font-medium text-slate-300 hover:bg-indigo-500/10 hover:text-white">Теория и видео</a>
+                <a href="#practice-section" onclick="navigateToSection('practice-section'); toggleMobileMenu()" class="block px-4 py-2.5 rounded-xl text-sm font-medium text-slate-300 hover:bg-indigo-500/10 hover:text-white">Практикум (90 заданий)</a>
+                <a href="#footer-section" onclick="navigateToSection('footer-section'); toggleMobileMenu()" class="block px-4 py-2.5 rounded-xl text-sm font-medium text-slate-300 hover:bg-indigo-500/10 hover:text-white">Контакты</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- ==================== СТРАНИЦА ВХОДА / РЕГИСТРАЦИИ (СКРЫТА ПО УМОЛЧАНИЮ) ==================== -->
+    <section id="auth-page-view" class="hidden flex-grow flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+        <div class="w-full max-w-md">
+            <button onclick="showMainView()" class="mb-6 inline-flex items-center gap-2 text-sm font-medium text-slate-400 hover:text-cyan-400 transition-colors">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg>
+                Вернуться на главную к урокам
+            </button>
+
+            <div class="glass-panel rounded-3xl p-6 sm:p-8 shadow-2xl border border-white/10 relative overflow-hidden">
+                <div class="absolute -top-24 -right-24 w-48 h-48 bg-indigo-500/20 rounded-full blur-3xl pointer-events-none"></div>
+                <div class="absolute -bottom-24 -left-24 w-48 h-48 bg-cyan-500/20 rounded-full blur-3xl pointer-events-none"></div>
+
+                <!-- Переключатель вкладок Вход / Регистрация -->
+                <div class="grid grid-cols-2 gap-2 p-1.5 rounded-2xl bg-slate-900/90 border border-white/10 mb-6">
+                    <button id="tab-login" onclick="switchAuthTab('login')" class="keep-white py-2.5 rounded-xl text-sm font-semibold transition-all bg-indigo-600 text-white shadow-md">
+                        Вход в аккаунт
+                    </button>
+                    <button id="tab-register" onclick="switchAuthTab('register')" class="py-2.5 rounded-xl text-sm font-semibold transition-all text-slate-400 hover:text-white">
+                        Регистрация
+                    </button>
+                </div>
+
+                <div class="mb-6 text-center">
+                    <h2 id="auth-title" class="text-2xl font-bold text-white">С возвращением!</h2>
+                    <p id="auth-subtitle" class="text-sm text-slate-400 mt-1">Войди, чтобы сохранять прогресс по темам 9 класса</p>
+                </div>
+
+                <div id="auth-alert" class="hidden mb-4 p-3.5 rounded-xl text-sm font-medium border"></div>
+
+                <form id="auth-form" onsubmit="handleAuthSubmit(event)" class="space-y-4">
+                    <div id="register-fields" class="hidden space-y-4">
+                        <div>
+                            <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1.5">Твоё имя и фамилия</label>
+                            <input type="text" id="auth-name" placeholder="Например: Алина Смирнова" class="theme-input w-full px-4 py-3 rounded-xl border text-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all">
+                        </div>
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1.5">Класс</label>
+                                <select id="auth-grade" class="theme-input w-full px-4 py-3 rounded-xl border text-sm focus:outline-none focus:border-indigo-500">
+                                    <option value="9 «А»">9 «А» класс</option>
+                                    <option value="9 «Б»">9 «Б» класс</option>
+                                    <option value="9 «В»">9 «В» класс</option>
+                                    <option value="9 «Г»">9 «Г» класс</option>
+                                    <option value="Учитель">Я учитель</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1.5">Цель</label>
+                                <select id="auth-goal" class="theme-input w-full px-4 py-3 rounded-xl border text-sm focus:outline-none focus:border-indigo-500">
+                                    <option value="СОР / СОЧ на 5">СОР / СОЧ на «5»</option>
+                                    <option value="Подготовка к экзамену">Экзамен</option>
+                                    <option value="Повторение правил">Повторение</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1.5">Электронная почта (Email)</label>
+                        <input type="email" id="auth-email" required placeholder="student9@school.kz" class="theme-input w-full px-4 py-3 rounded-xl border text-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all">
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1.5">Пароль</label>
+                        <input type="password" id="auth-password" required minlength="4" placeholder="Минимум 4 символа" class="theme-input w-full px-4 py-3 rounded-xl border text-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all">
+                    </div>
+
+                    <button type="submit" id="auth-submit-btn" class="keep-white w-full py-3.5 px-4 rounded-xl bg-gradient-to-r from-indigo-600 to-cyan-600 hover:from-indigo-500 hover:to-cyan-500 text-white font-bold text-sm shadow-lg shadow-indigo-600/30 transition-all active:scale-[0.98] mt-2">
+                        Войти в кабинет ученика
+                    </button>
+                </form>
+
+                <div class="mt-6 pt-5 border-t border-white/10 text-center">
+                    <p class="text-xs text-slate-400">
+                        Данные сохраняются локально в твоём браузере. Можно войти с любым тестовым email.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== ГЛАВНЫЙ КОНТЕНТ САЙТА (MAIN VIEW) ==================== -->
+    <main id="main-content-view" class="flex-grow">
+
+        <!-- 1. HERO-БЛОК С ПЕРСОНАЖЕМ-МАСКОТОМ И ОПИСАНИЕМ -->
+        <section id="hero-section" class="pt-10 pb-14 sm:pt-16 sm:pb-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+            <div class="glass-panel rounded-3xl p-6 sm:p-10 lg:p-12 relative overflow-hidden border border-white/10">
+                <div class="absolute top-0 right-0 w-96 h-96 bg-indigo-600/15 rounded-full blur-3xl -mr-20 -mt-20 pointer-events-none"></div>
+                <div class="absolute bottom-0 left-0 w-80 h-80 bg-cyan-500/10 rounded-full blur-3xl -ml-20 -mb-20 pointer-events-none"></div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center relative z-10">
+                    
+                    <!-- Левая колонка: Описание сайта -->
+                    <div class="lg:col-span-7 space-y-6">
+                        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-400/25 text-cyan-300 text-xs sm:text-sm font-medium">
+                            <span class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
+                            <span>Программа 9 класса • I четверть • Синтаксис и пунктуация</span>
+                        </div>
+
+                        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-white leading-tight">
+                            Русский язык без скучной зубрёжки: <span class="bg-gradient-to-r from-indigo-500 via-purple-500 to-cyan-500 bg-clip-text text-transparent">сложные предложения на изи!</span>
+                        </h1>
+
+                        <p class="text-slate-300 text-base sm:text-lg leading-relaxed">
+                            <strong class="text-white">«Синтаксис 9»</strong> — это интерактивный цифровой помощник для учеников 9 класса и учителей. Мы перевели сложные параграфы учебника на понятный язык, добавили визуальные схемы, видеоразборы и умный тренажёр на <strong>90 заданий</strong> (по 15 на каждую тему) с разбором ошибок.
+                        </p>
+
+                        <!-- Зачем нужен этот сайт (3 карточки преимуществ) -->
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
+                            <div class="p-3.5 rounded-2xl bg-slate-900/60 border border-white/5">
+                                <div class="text-indigo-400 font-bold text-sm mb-1">01. Понятная теория</div>
+                                <p class="text-xs text-slate-400">6 тем 1-й четверти с лайфхаками и схемами без воды.</p>
+                            </div>
+                            <div class="p-3.5 rounded-2xl bg-slate-900/60 border border-white/5">
+                                <div class="text-cyan-400 font-bold text-sm mb-1">02. Видеоуроки</div>
+                                <p class="text-xs text-slate-400">Наглядные разборы ключевых тем прямо на странице.</p>
+                            </div>
+                            <div class="p-3.5 rounded-2xl bg-slate-900/60 border border-white/5">
+                                <div class="text-purple-400 font-bold text-sm mb-1">03. 90 заданий</div>
+                                <p class="text-xs text-slate-400">Вписать ответ, соотнести пары и тесты по каждой теме.</p>
+                            </div>
+                        </div>
+
+                        <div class="flex flex-wrap items-center gap-4 pt-2">
+                            <a href="#theory-section" class="keep-white px-6 py-3.5 rounded-2xl bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-bold text-sm sm:text-base shadow-lg shadow-indigo-600/30 transition-all hover:-translate-y-0.5">
+                                Изучить темы 1 четверти
+                            </a>
+                            <a href="#practice-section" class="px-6 py-3.5 rounded-2xl bg-slate-800/80 hover:bg-slate-800 text-white font-semibold text-sm sm:text-base border border-white/10 transition-all">
+                                Перейти к практике (90 заданий)
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Правая колонка: Персонаж-маскот Кибер-филолог «Макс» -->
+                    <div class="lg:col-span-5 flex flex-col items-center">
+                        <div class="w-full max-w-md glass-card rounded-3xl p-6 border border-indigo-400/25 relative">
+                            <div class="bg-slate-900/90 border border-cyan-500/30 rounded-2xl p-4 mb-5 relative shadow-sm">
+                                <div class="flex items-center justify-between mb-1.5">
+                                    <span class="text-xs font-mono font-bold text-cyan-400 uppercase tracking-wider">AI-наставник Макс</span>
+                                    <span class="text-[11px] px-2 py-0.5 rounded-md bg-emerald-500/15 text-emerald-300">Онлайн</span>
+                                </div>
+                                <p id="mascot-speech" class="text-sm text-slate-200 leading-relaxed">
+                                    «Салют, девятиклассник! 👋 В 1-й четверти мы разбираем <strong>сложносочинённые предложения (ССП)</strong>. Выбирай тему, смотри видео и прокачивайся на 15 заданиях в каждом разделе!»
+                                </p>
+                            </div>
+
+                            <div class="flex items-center gap-4">
+                                <div class="w-24 h-24 sm:w-28 sm:h-28 shrink-0 animate-float">
+                                    <svg viewBox="0 0 120 120" class="w-full h-full drop-shadow-[0_10px_20px_rgba(99,102,241,0.35)]">
+                                        <defs>
+                                            <linearGradient id="botBody" x1="0%" y1="0%" x2="100%" y2="100%">
+                                                <stop offset="0%" stop-color="#6366F1"/>
+                                                <stop offset="100%" stop-color="#06B6D4"/>
+                                            </linearGradient>
+                                            <linearGradient id="visorGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                                                <stop offset="0%" stop-color="#0F172A"/>
+                                                <stop offset="100%" stop-color="#1E293B"/>
+                                            </linearGradient>
+                                        </defs>
+                                        <line x1="60" y1="12" x2="60" y2="26" stroke="#38BDF8" stroke-width="4" stroke-linecap="round"/>
+                                        <circle cx="60" cy="10" r="5" fill="#22D3EE"/>
+                                        <rect x="14" y="46" width="10" height="28" rx="5" fill="#4F46E5"/>
+                                        <rect x="96" y="46" width="10" height="28" rx="5" fill="#0891B2"/>
+                                        <rect x="22" y="26" width="76" height="68" rx="22" fill="url(#botBody)"/>
+                                        <rect x="30" y="36" width="60" height="44" rx="14" fill="url(#visorGrad)" stroke="#38BDF8" stroke-width="1.5"/>
+                                        <circle cx="47" cy="54" r="6" fill="#22D3EE"/>
+                                        <circle cx="49" cy="52" r="2" fill="#FFFFFF"/>
+                                        <circle cx="73" cy="54" r="6" fill="#22D3EE"/>
+                                        <circle cx="75" cy="52" r="2" fill="#FFFFFF"/>
+                                        <path d="M 50 67 Q 60 74 70 67" stroke="#34D399" stroke-width="3" stroke-linecap="round" fill="none"/>
+                                        <text x="60" y="110" text-anchor="middle" fill="#64748B" font-family="monospace" font-weight="bold" font-size="14">[ — = ]</text>
+                                    </svg>
+                                </div>
+
+                                <div class="space-y-2.5">
+                                    <div class="text-xs text-slate-400">Нужен быстрый лайфхак по правилам?</div>
+                                    <button onclick="nextMascotTip()" class="px-3.5 py-2 rounded-xl bg-indigo-500/20 hover:bg-indigo-500/30 border border-indigo-400/30 text-indigo-300 text-xs font-semibold transition-all flex items-center gap-1.5">
+                                        <span>💡 Другой совет от Макса</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- 2 & 3. ТЕОРИЯ ПО ТЕМАМ 1 ЧЕТВЕРТИ + ВИДЕОУРОКИ -->
+        <section id="theory-section" class="py-10 sm:py-14 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
+                <div>
+                    <span class="text-xs font-mono uppercase tracking-widest text-cyan-400 font-semibold">Модуль обучения • 6 тем</span>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-white mt-1">Теория и видеоуроки (I четверть)</h2>
+                    <p class="text-slate-400 text-sm sm:text-base mt-1">Выбери тему из списка, чтобы открыть конспект с примерами. На ключевых уроках прикреплены видеоразборы.</p>
+                </div>
+
+                <div class="glass-card px-4 py-2.5 rounded-2xl flex items-center gap-3 self-start md:self-auto">
+                    <div class="text-xs text-slate-400">Изучено тем:</div>
+                    <div id="completed-lessons-badge" class="font-mono font-bold text-sm text-cyan-400">0 / 6</div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start">
+                <!-- Левое меню выбора тем -->
+                <div class="lg:col-span-4 space-y-2.5" id="lessons-nav-list"></div>
+
+                <!-- Правая область отображения выбранного урока -->
+                <div class="lg:col-span-8">
+                    <div id="lesson-content-card" class="glass-panel rounded-3xl p-6 sm:p-8 border border-white/10"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. ИНТЕРАКТИВНЫЙ ПРАКТИКУМ (15 ЗАДАНИЙ НА КАЖДУЮ ТЕМУ = 90 ЗАДАНИЙ) -->
+        <section id="practice-section" class="py-12 sm:py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+            <div class="glass-panel rounded-3xl p-6 sm:p-10 border border-white/10 relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-72 h-72 bg-purple-600/10 rounded-full blur-3xl pointer-events-none"></div>
+
+                <!-- Шапка практикума -->
+                <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-6 border-b border-white/10">
+                    <div>
+                        <span class="text-xs font-mono uppercase tracking-widest text-purple-400 font-semibold">Умный тренажёр • 15 заданий на тему</span>
+                        <h2 class="text-2xl sm:text-3xl font-extrabold text-white mt-1">Практика с пояснением ошибок</h2>
+                        <p class="text-slate-400 text-sm mt-1">
+                            В каждой теме: <strong>№1–5</strong> вписать ответ, <strong>№6–10</strong> соотнести пары, <strong>№11–15</strong> тестовые задания.
+                        </p>
+                    </div>
+
+                    <!-- Выбор темы -->
+                    <div class="flex flex-col sm:flex-row sm:items-center gap-2">
+                        <label for="practice-topic-select" class="text-xs text-slate-400 font-semibold uppercase tracking-wider">Тема:</label>
+                        <select id="practice-topic-select" onchange="selectPracticeTopic(this.value)" class="theme-input px-4 py-2.5 rounded-xl border text-sm font-semibold focus:outline-none focus:border-indigo-500">
+                            <option value="1">Тема 1: Повторение (8 класс) — 15 заданий</option>
+                            <option value="2">Тема 2: Сложное предложение (СП) — 15 заданий</option>
+                            <option value="3">Тема 3: Союзы в ССП — 15 заданий</option>
+                            <option value="4">Тема 4: Смысловые отношения в ССП — 15 заданий</option>
+                            <option value="5">Тема 5: Пунктуация и исключения в ССП — 15 заданий</option>
+                            <option value="6">Тема 6: Схемы и разбор ССП — 15 заданий</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Фильтр по типу заданий (1-5 Вписать, 6-10 Соотнести, 11-15 Тесты) -->
+                <div class="flex flex-wrap items-center justify-between gap-3 my-5">
+                    <div class="flex flex-wrap items-center gap-2" id="type-filter-buttons">
+                        <button onclick="setPracticeTypeFilter('all')" data-filter="all" class="filter-pill px-3.5 py-2 rounded-xl text-xs font-bold transition-all bg-indigo-600 text-white keep-white">
+                            Все 15 заданий
+                        </button>
+                        <button onclick="setPracticeTypeFilter('fill')" data-filter="fill" class="filter-pill px-3.5 py-2 rounded-xl text-xs font-semibold transition-all bg-slate-800/80 text-slate-300 border border-white/10">
+                            1–5: Вписать ответ (5)
+                        </button>
+                        <button onclick="setPracticeTypeFilter('match')" data-filter="match" class="filter-pill px-3.5 py-2 rounded-xl text-xs font-semibold transition-all bg-slate-800/80 text-slate-300 border border-white/10">
+                            6–10: Соотнести (5)
+                        </button>
+                        <button onclick="setPracticeTypeFilter('choice')" data-filter="choice" class="filter-pill px-3.5 py-2 rounded-xl text-xs font-semibold transition-all bg-slate-800/80 text-slate-300 border border-white/10">
+                            11–15: Тесты (5)
+                        </button>
+                    </div>
+
+                    <div id="topic-mastery-badge" class="text-xs font-mono font-bold px-3 py-1.5 rounded-xl bg-emerald-500/15 text-emerald-300 border border-emerald-500/25">
+                        Решено в теме: 0 / 15
+                    </div>
+                </div>
+
+                <!-- Быстрая навигация по номерам заданий (1..15) -->
+                <div id="question-pills-grid" class="flex flex-wrap gap-1.5 mb-5"></div>
+
+                <!-- Прогресс-бар тренажёра -->
+                <div class="mb-6">
+                    <div class="flex items-center justify-between text-xs text-slate-400 mb-2">
+                        <span id="practice-counter">Задание 1 из 15</span>
+                        <span id="practice-stats" class="font-mono text-emerald-400">Верно в теме: 0 | Ошибок: 0</span>
+                    </div>
+                    <div class="w-full h-2.5 bg-slate-900 rounded-full overflow-hidden border border-white/5">
+                        <div id="practice-progress-bar" class="h-full bg-gradient-to-r from-indigo-500 via-purple-500 to-cyan-400 transition-all duration-300" style="width: 6.66%"></div>
+                    </div>
+                </div>
+
+                <!-- Контейнер текущего задания -->
+                <div id="quiz-workspace" class="bg-slate-900/65 rounded-2xl p-5 sm:p-7 border border-white/10"></div>
+
+                <!-- Навигация между заданиями -->
+                <div class="flex flex-wrap items-center justify-between gap-3 mt-6 pt-4 border-t border-white/10">
+                    <button id="prev-q-btn" onclick="prevQuestion()" class="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 disabled:opacity-40 disabled:pointer-events-none text-sm font-semibold text-white transition-colors">
+                        ← Предыдущее
+                    </button>
+
+                    <div class="flex items-center gap-2">
+                        <button onclick="resetTopicPractice()" class="px-4 py-2.5 rounded-xl bg-slate-800/70 hover:bg-slate-800 text-xs font-medium text-slate-300 border border-white/10 transition-colors">
+                            Сбросить эту тему
+                        </button>
+                        <button id="next-q-btn" onclick="nextQuestion()" class="keep-white px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-sm font-semibold text-white shadow-lg shadow-indigo-600/20 transition-colors">
+                            Следующее задание →
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ==================== ПОДВАЛ САЙТА (FOOTER) ==================== -->
+    <footer id="footer-section" class="theme-footer mt-12 border-t">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                
+                <!-- Колонка 1: О проекте -->
+                <div class="lg:col-span-2 space-y-4">
+                    <div class="flex items-center gap-3">
+                        <div class="keep-white w-9 h-9 rounded-xl bg-gradient-to-br from-indigo-500 to-cyan-400 flex items-center justify-center text-white font-extrabold font-mono">
+                            С9
+                        </div>
+                        <span class="font-extrabold text-lg text-white">Синтаксис 9 | Помощник учителя</span>
+                    </div>
+                    <p class="text-sm text-slate-400 leading-relaxed max-w-lg">
+                        Образовательная платформа, созданная в помощь ученикам 9 классов и преподавателям русского языка. Все материалы структурированы по учебной программе I четверти: от повторения синтаксиса 8 класса до полного пунктуационного разбора сложносочинённых предложений.
+                    </p>
+                    <div class="pt-1">
+                        <span class="inline-block text-xs text-slate-500 bg-slate-900 px-3 py-1.5 rounded-lg border border-white/5">
+                            Версия платформы 3.0 • 90 интерактивных заданий • Светлая и тёмная темы
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Колонка 2: Разделы -->
+                <div class="space-y-3">
+                    <h3 class="text-sm font-bold uppercase tracking-wider text-white">Навигация</h3>
+                    <ul class="space-y-2 text-sm text-slate-400">
+                        <li><a href="#hero-section" onclick="navigateToSection('hero-section')" class="hover:text-cyan-400 transition-colors">О проекте и наставнике</a></li>
+                        <li><a href="#theory-section" onclick="navigateToSection('theory-section')" class="hover:text-cyan-400 transition-colors">Теория 1-й четверти</a></li>
+                        <li><a href="#theory-section" onclick="selectLesson(2); navigateToSection('theory-section')" class="hover:text-cyan-400 transition-colors">Видеоуроки по ССП</a></li>
+                        <li><a href="#practice-section" onclick="navigateToSection('practice-section')" class="hover:text-cyan-400 transition-colors">Интерактивный практикум</a></li>
+                        <li><button onclick="showAuthView('register')" class="hover:text-cyan-400 transition-colors text-left">Регистрация ученика</button></li>
+                    </ul>
+                </div>
+
+                <!-- Колонка 3: О нас и контакты -->
+                <div class="space-y-3">
+                    <h3 class="text-sm font-bold uppercase tracking-wider text-white">О нас и контакты</h3>
+                    <p class="text-xs text-slate-400 leading-relaxed">
+                        Команда методистов-филологов и веб-разработчиков «EduLab Syntax». Делаем изучение грамматики современным и доступным.
+                    </p>
+                    <ul class="space-y-2 text-sm text-slate-300 pt-1">
+                        <li class="flex items-center gap-2">
+                            <span class="text-cyan-400">📍</span>
+                            <span>г. Караганда / г. Астана, Образовательный технопарк</span>
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <span class="text-cyan-400">✉️</span>
+                            <a href="mailto:help@syntax9-edu.kz" class="hover:text-cyan-400 transition-colors">help@syntax9-edu.kz</a>
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <span class="text-cyan-400">📞</span>
+                            <a href="tel:+77001234567" class="hover:text-cyan-400 transition-colors">+7 (700) 123-45-67</a>
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <span class="text-cyan-400">💬</span>
+                            <span>Telegram: @syntax9_helper</span>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <div class="mt-10 pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+                <p>© 2026 «Синтаксис 9 — Помощник учителя русского языка». Все права защищены.</p>
+                <p>Сделано с любовью к русскому языку и пунктуации.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ==================== JAVASCRIPT ЛОГИКА ==================== -->
+    <script>
+        // -------------------- 1. БАЗА ЗНАНИЙ: УРОКИ 1-Й ЧЕТВЕРТИ (9 КЛАСС) --------------------
+        const lessonsData = [
+            {
+                id: 1,
+                number: "Тема 01",
+                title: "Повторение: односоставные и осложнённые предложения",
+                shortTitle: "Повторение 8 класса",
+                duration: "7 мин чтения",
+                hasVideo: false,
+                summary: "Вспоминаем базу 8 класса: как находить грамматическую основу, если в предложении только подлежащее или только сказуемое, и чем осложняется простое предложение.",
+                blocks: [
+                    {
+                        heading: "1. Грамматическая основа — фундамент всего",
+                        text: "Чтобы не путать простое предложение со сложным, нужно безошибочно выделять грамматическую основу (ГО). В двусоставном предложении есть и подлежащее, и сказуемое. В <strong>односоставном</strong> — только один главный член, и второй не нужен для понимания смысла.",
+                        example: "На улице <u>светает</u>. (Односоставное безличное — нет и не может быть того, кто выполняет действие).<br><u>Люблю</u> грозу в начале мая. (Определённо-личное — легко подставить местоимение «я»)."
+                    },
+                    {
+                        heading: "2. Чем может быть осложнено простое предложение?",
+                        text: "Даже если основа всего одна, внутри могут стоять конструкции, требующие запятых. Не принимай их за отдельные простые предложения в составе сложного!",
+                        list: [
+                            "<strong>Однородные члены:</strong> Ветер <u>свистел</u>, <u>выл</u> и <u>кружил</u> листья. (Одна основа, однородные сказуемые).",
+                            "<strong>Причастный оборот (ПО):</strong> Книга, <em>прочитанная за ночь</em>, оказалась захватывающей.",
+                            "<strong>Деепричастный оборот (ДО):</strong> <em>Выйдя из школы</em>, мы пошли в парк.",
+                            "<strong>Обращения и вводные слова:</strong> <em>Ребята</em>, мы, <em>конечно</em>, справимся с тестом!"
+                        ]
+                    },
+                    {
+                        heading: "Лайфхак от Макса",
+                        isTip: true,
+                        text: "Видишь союз «И» и хочешь поставить запятую? Сначала посчитай основы! Если два сказуемых относятся к одному подлежащему (<em>«Брат пришёл и включил ноутбук»</em>) — это простое предложение, запятая перед одиночным «И» НЕ нужна."
+                    }
+                ]
+            },
+            {
+                id: 2,
+                number: "Тема 02",
+                title: "Сложное предложение (СП). Союзные и бессоюзные СП",
+                shortTitle: "Понятие о сложном предложении",
+                duration: "6 мин + Видеоурок",
+                hasVideo: true,
+                videoTitle: "Видеоурок: Понятие о сложном предложении (9 класс)",
+                youtubeId: "e0k8i5p5n1A",
+                videoFallbackQuery: "Сложное предложение 9 класс русский язык видеоурок",
+                summary: "Разбираемся, что такое сложное предложение, как отличать его от простого с однородными членами и на какие две большие группы делятся все СП.",
+                blocks: [
+                    {
+                        heading: "1. Что такое сложное предложение?",
+                        text: "<strong>Сложное предложение (СП)</strong> — это предложение, которое состоит из двух или нескольких простых предложений (частей), объединённых по смыслу и интонационно. В нём всегда <strong>две и более грамматических основ</strong>.",
+                        example: "<span class='text-cyan-300 font-mono'>[Прозвенел звонок]</span>, и <span class='text-indigo-300 font-mono'>[ученики зашли в класс]</span>.<br>Основа 1: <u>звонок прозвенел</u>. Основа 2: <u>ученики зашли</u>. Это сложное предложение."
+                    },
+                    {
+                        heading: "2. Два главных вида сложных предложений",
+                        text: "По способу связи частей все сложные предложения делятся на два лагеря:",
+                        list: [
+                            "<strong>Бессоюзные (БСП):</strong> части связаны только интонацией и смыслом, союзов между ними нет. Пример: <em>[Солнце зашло], [стало прохладно].</em>",
+                            "<strong>Союзные:</strong> части связаны не только интонацией, но и союзами (или союзными словами). Делятся на <strong>сложносочинённые (ССП)</strong> и <strong>сложноподчинённые (СПП)</strong>."
+                        ]
+                    },
+                    {
+                        heading: "В чём разница между ССП и СПП?",
+                        isTip: true,
+                        text: "В <strong>ССП</strong> части равноправны: от одной нельзя задать вопрос к другой (используем квадратные скобки: <code>[ — = ], и [ — = ]</code>). В <strong>СПП</strong> одна часть главная, а вторая — зависимая (придаточная), к ней задаётся вопрос: <code>[ — = ], (потому что — =)</code>."
+                    }
+                ]
+            },
+            {
+                id: 3,
+                number: "Тема 03",
+                title: "Сложносочинённые предложения (ССП) и группы союзов",
+                shortTitle: "ССП и сочинительные союзы",
+                duration: "8 мин + Видеоурок",
+                hasVideo: true,
+                videoTitle: "Видеоурок: Сложносочинённое предложение и союзы в нём",
+                youtubeId: "x2mK0y3_y0w",
+                videoFallbackQuery: "Сложносочиненное предложение 9 класс русский язык",
+                summary: "Изучаем строение сложносочинённого предложения и три разряда сочинительных союзов, которые работают мостиками между равноправными частями.",
+                blocks: [
+                    {
+                        heading: "1. Строение ССП",
+                        text: "В <strong>сложносочинённом предложении (ССП)</strong> простые предложения равноправны по смыслу и связаны <strong>сочинительными союзами</strong>. Важно помнить: сочинительный союз не входит ни в одну из частей, а стоит <em>между</em> ними.",
+                        example: "<span class='font-mono text-cyan-300'>[Ветер утих]</span>, <span class='text-amber-400 font-bold'>но</span> <span class='font-mono text-indigo-300'>[море ещё долго волновалось]</span>.<br>Схема: <code>[ — = ], но [ — = ].</code>"
+                    },
+                    {
+                        heading: "2. Три группы сочинительных союзов (нужно знать наизусть!)",
+                        text: "От того, какой союз связывает части, зависит смысл всего предложения:",
+                        list: [
+                            "<strong>Соединительные:</strong> <code>и</code>, <code>да (= и)</code>, <code>ни... ни</code>, <code>тоже</code>, <code>также</code>, <code>не только... но и</code>, <code>как... так и</code>.",
+                            "<strong>Противительные:</strong> <code>а</code>, <code>но</code>, <code>да (= но)</code>, <code>однако</code>, <code>зато</code>, <code>же</code>.",
+                            "<strong>Разделительные:</strong> <code>или (иль)</code>, <code>либо</code>, <code>то... то</code>, <code>не то... не то</code>, <code>то ли... то ли</code>."
+                        ]
+                    },
+                    {
+                        heading: "Ловушка союза «ДА»",
+                        isTip: true,
+                        text: "Союз <strong>«ДА»</strong> — хамелеон! Если его можно заменить на «И» (<em>«Светит солнце, да поют птицы»</em>) — он соединительный. Если заменяется на «НО» (<em>«Мал золотник, да дорог»</em>) — он противительный."
+                    }
+                ]
+            },
+            {
+                id: 4,
+                number: "Тема 04",
+                title: "Смысловые отношения между частями ССП",
+                shortTitle: "Смысловые отношения в ССП",
+                duration: "6 мин чтения",
+                hasVideo: false,
+                summary: "Учимся определять, какие смысловые связи возникают между частями ССП: одновременность, последовательность, противопоставление или чередование событий.",
+                blocks: [
+                    {
+                        heading: "1. ССП с соединительными союзами",
+                        text: "Здесь части дополняют друг друга. Выделяют три оттенка смысла:",
+                        list: [
+                            "<strong>Одновременность действий:</strong> <em>[Сверкала молния], и [гремел гром].</em> (Происходит в одно и то же время).",
+                            "<strong>Последовательность действий:</strong> <em>[Дверь тихо открылась], и [в комнату вошёл кот].</em> (Сначала первое, потом второе).",
+                            "<strong>Причина и следствие:</strong> <em>[Утро выдалось морозным], и [лужи покрылись тонким льдом].</em> (Второе событие — результат первого)."
+                        ]
+                    },
+                    {
+                        heading: "2. ССП с противительными союзами",
+                        text: "Здесь события <strong>противопоставляются</strong> друг другу или одно ограничивает другое.",
+                        example: "<span class='font-mono text-cyan-300'>[Я хотел пойти на тренировку]</span>, <span class='text-amber-400 font-bold'>однако</span> <span class='font-mono text-indigo-300'>[начался сильный ливень]</span>.<br>Смысл: противопоставление (ожидалось одно, но случилось другое)."
+                    },
+                    {
+                        heading: "3. ССП с разделительными союзами",
+                        text: "Указывают на <strong>чередование</strong> явлений или необходимость <strong>выбора</strong> одного из вариантов:",
+                        list: [
+                            "<strong>Чередование:</strong> <em>[То солнце выглянет из-за туч], [то снова пойдёт мелкий дождь].</em>",
+                            "<strong>Взаимоисключение (выбор):</strong> <em>[Или мы сейчас выходим], [или мы опоздаем на поезд].</em>"
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 5,
+                number: "Тема 05",
+                title: "Знаки препинания в ССП. Когда запятая НЕ ставится",
+                shortTitle: "Пунктуация в ССП (исключения)",
+                duration: "9 мин + Видеоурок",
+                hasVideo: true,
+                videoTitle: "Видеоурок: Когда запятая в ССП перед союзом И не ставится",
+                youtubeId: "7p9L4p8Z9gM",
+                videoFallbackQuery: "Запятая в сложносочиненном предложении когда не ставится 9 класс",
+                summary: "Самая важная тема для СОР и экзаменов! Разбираем базовое правило постановки запятой в ССП и 4 случая-исключения, когда запятая перед союзом «И» исчезает.",
+                blocks: [
+                    {
+                        heading: "1. Базовое правило",
+                        text: "Между простыми предложениями в составе ССП обычно ставится <strong>запятая</strong> перед сочинительным союзом: <code>[ — = ], и [ — = ].</code>",
+                        example: "[Наступил вечер], <strong>и</strong> [на небе зажглись первые звёзды]."
+                    },
+                    {
+                        heading: "2. Когда запятая перед одиночными союзами И, ДА (= И), ИЛИ, ЛИБО НЕ ставится?",
+                        text: "Запятая исчезает, если части ССП объединены общим элементом, который относится к обеим частям сразу:",
+                        list: [
+                            "<strong>Есть общий второстепенный член</strong> (обычно стоит в самом начале предложения и отвечает на вопрос <em>где?</em> или <em>когда?</em>):<br><em><u>В лесу</u> [пели птицы] и [шумели сосны].</em> (Где пели птицы? В лесу. Где шумели сосны? Тоже в лесу! Общее место объединяет части — запятая НЕ нужна).",
+                            "<strong>Есть общее придаточное предложение:</strong><br><em><u>(Когда мы вернулись домой)</u>, [уже стемнело] и [зажглись фонари].</em>",
+                            "<strong>Есть общее вводное слово:</strong><br><em><u>К счастью</u>, [дождь закончился] и [выглянуло солнце].</em>",
+                            "<strong>Обе части — вопросительные, побудительные или восклицательные предложения:</strong><br><em>[Который сейчас час] и [когда приедет автобус]?</em>"
+                        ]
+                    },
+                    {
+                        heading: "Супер-проверка от Макса",
+                        isTip: true,
+                        text: "Чтобы проверить, общий ли второстепенный член в начале предложения, попробуй подставить его во вторую часть: <em>«Утром [светило солнце] и (утром) [пели птицы]»</em>. Звучит логично? Значит, он общий, и <strong>запятую перед «И» не ставим!</strong>"
+                    }
+                ]
+            },
+            {
+                id: 6,
+                number: "Тема 06",
+                title: "Синтаксический и пунктуационный разбор ССП",
+                shortTitle: "Полный разбор ССП",
+                duration: "7 мин чтения",
+                hasVideo: false,
+                summary: "Пошаговый алгоритм разбора сложносочинённого предложения на контрольной работе: как правильно характеризовать предложение и чертить схему.",
+                blocks: [
+                    {
+                        heading: "1. Алгоритм синтаксического разбора ССП",
+                        text: "Чтобы получить максимальный балл на СОР за разбор, действуй строго по шагам:",
+                        list: [
+                            "<strong>Шаг 1.</strong> Выдели грамматические основы в каждой части и докажи, что предложение сложное.",
+                            "<strong>Шаг 2.</strong> Найди сочинительный союз, определи его группу (соединительный, противительный или разделительный).",
+                            "<strong>Шаг 3.</strong> Определи смысловые отношения между частями (одновременность, противопоставление и т.д.).",
+                            "<strong>Шаг 4.</strong> Охарактеризуй предложение целиком (повествовательное, невосклицательное, сложное, союзное, сложносочинённое, состоит из 2 частей).",
+                            "<strong>Шаг 5.</strong> Разбери каждую часть как простое предложение (двусоставное/односоставное, распространённое/нераспространённое, осложнено или нет) и начерти схему."
+                        ]
+                    },
+                    {
+                        heading: "2. Образец разбора",
+                        text: "Разберём предложение: <em>«Прошёл короткий летний дождь, и воздух сразу наполнился свежестью».</em>",
+                        example: "1. Основа 1: <u>прошёл</u> <u>дождь</u>. Основа 2: <u>воздух</u> <u>наполнился</u>.<br>2. Предложение повествовательное, невосклицательное, сложное, союзное, сложносочинённое (связано соединительным союзом <strong>и</strong>, отношения последовательности и следствия).<br>3. Часть 1: двусоставная, распространённая, неосложнённая. Часть 2: двусоставная, распространённая, неосложнённая.<br>4. Схема: <code class='text-cyan-300 font-bold'>[ = — ], и [ — = ].</code>"
+                    }
+                ]
+            }
+        ];
+
+        // -------------------- 2. БАЗА ПРАКТИЧЕСКИХ ЗАДАНИЙ: 6 ТЕМ × 15 ЗАДАНИЙ = 90 ЗАДАНИЙ --------------------
+        // В каждой теме строго:
+        // № 1..5  -> type: 'fill'   (вписать ответ в предложение)
+        // № 6..10 -> type: 'match'  (соотнести левую и правую колонки)
+        // № 11..15 -> type: 'choice' (тестовые с 4 вариантами)
+
+        const topicPracticeBank = {
+            // ==================== ТЕМА 1: ПОВТОРЕНИЕ (8 КЛАСС) ====================
+            1: [
+                // 1-5: Вписать ответ
+                {
+                    id: "1_1", num: 1, type: "fill",
+                    prompt: "Впишите пропущенный сочинительный союз, который соединяет однородные сказуемые в простом предложении:",
+                    before: "Девятиклассник открыл тетрадь ",
+                    after: " аккуратно записал тему сегодняшнего урока.",
+                    placeholder: "союз",
+                    answers: ["и"],
+                    explanation: "Соединительный союз «и» связывает два однородных сказуемых («открыл» и «записал») при одном подлежащем «девятиклассник». Запятая перед одиночным союзом «и» не ставится."
+                },
+                {
+                    id: "1_2", num: 2, type: "fill",
+                    prompt: "Впишите вводное слово со значением уверенности (например: конечно), обособленное запятыми с двух сторон:",
+                    before: "Мы, ",
+                    after: ", успешно справимся с контрольной работой по синтаксису.",
+                    placeholder: "вводное слово",
+                    answers: ["конечно", "разумеется", "безусловно", "несомненно"],
+                    explanation: "Вводные слова («конечно», «разумеется», «безусловно») не являются членами предложения и всегда выделяются запятыми на письме."
+                },
+                {
+                    id: "1_3", num: 3, type: "fill",
+                    prompt: "Впишите нужное окончание причастия в предложении с причастным оборотом (вопрос: книга какая?):",
+                    before: "Книга, прочитанн",
+                    after: " мною за выходные, оказалась невероятно интересной.",
+                    placeholder: "окончание",
+                    answers: ["ая"],
+                    explanation: "Главное слово «книга» — женского рода, единственного числа, именительного падежа (книга какая? — прочитанная). Причастный оборот стоит после определяемого слова и выделяется запятыми."
+                },
+                {
+                    id: "1_4", num: 4, type: "fill",
+                    prompt: "Впишите пропущенный противительный союз в простое предложение с однородными членами:",
+                    before: "Ветер дул порывистый, ",
+                    after: " тёплый.",
+                    placeholder: "союз",
+                    answers: ["но", "однако", "зато"],
+                    explanation: "Между однородными определениями с противительным значением ставится запятая перед союзами «но», «однако», «зато»."
+                },
+                {
+                    id: "1_5", num: 5, type: "fill",
+                    prompt: "Впишите нужный знак препинания (запятая или тире) после обращения в начале предложения:",
+                    before: "Ребята",
+                    after: " не забудьте повторить правила постановки знаков препинания!",
+                    placeholder: "знак",
+                    answers: [","],
+                    explanation: "Обращение «Ребята» в начале предложения при спокойной интонации выделяется запятой. Обращение не является грамматической основой."
+                },
+                // 6-10: Соотнести
+                {
+                    id: "1_6", num: 6, type: "match",
+                    prompt: "Соотнесите односоставное предложение с его типом:",
+                    pairs: [
+                        { left: "На улице уже совсем стемнело.", right: "Безличное" },
+                        { left: "Люблю грозу в начале мая.", right: "Определённо-личное" },
+                        { left: "В школе объявили о начале олимпиады.", right: "Неопределённо-личное" },
+                        { left: "Раннее осеннее утро.", right: "Назывное" }
+                    ],
+                    explanation: "«Стемнело» — действие происходит само по себе (безличное); «Люблю» — легко подставить «я» (определённо-личное); «Объявили» — глагол 3-го лица мн.ч. (неопределённо-личное); «Утро» — только подлежащее (назывное)."
+                },
+                {
+                    id: "1_7", num: 7, type: "match",
+                    prompt: "Соотнесите предложение с тем, чем оно осложнено:",
+                    pairs: [
+                        { left: "Листья, кружась в воздухе, медленно падали на землю.", right: "Деепричастный оборот" },
+                        { left: "Тучи, закрывшие всё небо, предвещали ливень.", right: "Причастный оборот" },
+                        { left: "Друзья, давайте встретимся после уроков!", right: "Обращение" },
+                        { left: "К счастью, дождь быстро прекратился.", right: "Вводное слово" }
+                    ],
+                    explanation: "«Кружась в воздухе» отвечает на вопрос «что делая?» (деепричастный оборот); «закрывшие всё небо» — «какие?» (причастный оборот); «Друзья» — обращение; «К счастью» — вводное слово."
+                },
+                {
+                    id: "1_8", num: 8, type: "match",
+                    prompt: "Соотнесите предложение с количеством грамматических основ в нём:",
+                    pairs: [
+                        { left: "Брат пришёл домой, поужинал и сел за уроки.", right: "1 основа (простое с однородными)" },
+                        { left: "Прозвенел звонок, и ученики вошли в класс.", right: "2 основы (сложное)" },
+                        { left: "Тучи рассеялись, выглянуло солнце, и птицы запели.", right: "3 основы (сложное)" }
+                    ],
+                    explanation: "В первом предложении одно подлежащее «брат» и три однородных сказуемых — это простое предложение с 1 основой. Во втором — 2 основы, в третьем — 3 основы."
+                },
+                {
+                    id: "1_9", num: 9, type: "match",
+                    prompt: "Соотнесите вид второстепенного члена предложения с вопросом, на который он отвечает:",
+                    pairs: [
+                        { left: "Определение", right: "Какой? Чей?" },
+                        { left: "Дополнение", right: "Кого? Чего? Кому? Чему? (косвенные падежи)" },
+                        { left: "Обстоятельство", right: "Где? Когда? Куда? Откуда? Почему? Как?" }
+                    ],
+                    explanation: "Определение обозначает признак предмета (какой?), дополнение — объект действия (вопросы косвенных падежей), обстоятельство — место, время, причину или образ действия (где? когда? как?)."
+                },
+                {
+                    id: "1_10", num: 10, type: "match",
+                    prompt: "Соотнесите конструкцию с правилом постановки запятой:",
+                    pairs: [
+                        { left: "Причастный оборот ПОСЛЕ определяемого слова", right: "Выделяется запятыми с двух сторон" },
+                        { left: "Причастный оборот ПЕРЕД определяемым словом", right: "Запятыми обычно не выделяется" },
+                        { left: "Деепричастный оборот в любой позиции", right: "Всегда выделяется запятыми" }
+                    ],
+                    explanation: "Деепричастный оборот обособляется всегда, независимо от места в предложении. Причастный оборот обособляется, если стоит после главного слова."
+                },
+                // 11-15: Тестовые
+                {
+                    id: "1_11", num: 11, type: "choice",
+                    question: "В каком предложении перед союзом «И» НЕ нужна запятая, так как оно простое с однородными сказуемыми?",
+                    options: [
+                        "Солнце скрылось за горизонтом и на город опустились сумерки.",
+                        "Ученик открыл учебник и быстро выписал все сочинительные союзы.",
+                        "Прозвенел звонок на перемену и ребята вышли в коридор.",
+                        "Ветер усилился и волны с шумом накатывали на берег."
+                    ],
+                    correctIndex: 1,
+                    explanation: "В варианте 2 одна грамматическая основа: «ученик (что сделал?) открыл и выписал». Это простое предложение с однородными сказуемыми, запятая не ставится."
+                },
+                {
+                    id: "1_12", num: 12, type: "choice",
+                    question: "Определите тип односоставного предложения: «В классе стало совсем тихо».",
+                    options: [
+                        "Определённо-личное",
+                        "Неопределённо-личное",
+                        "Безличное",
+                        "Назывное"
+                    ],
+                    correctIndex: 2,
+                    explanation: "Грамматическая основа — «стало тихо» (состояние среды). Подлежащего нет и подставить его невозможно — это безличное предложение."
+                },
+                {
+                    id: "1_13", num: 13, type: "choice",
+                    question: "Укажите простое предложение, осложнённое обособленным определением (причастным оборотом):",
+                    options: [
+                        "Прочитанная за вечер книга оставила приятное впечатление.",
+                        "Дорога, усыпанная жёлтыми листьями, вела к старому парку.",
+                        "Собрав рюкзак, я вышел из дома за десять минут до звонка.",
+                        "К сожалению, экскурсию перенесли на следующую неделю."
+                    ],
+                    correctIndex: 1,
+                    explanation: "В предложении «Дорога, усыпанная жёлтыми листьями, вела к старому парку» причастный оборот «усыпанная жёлтыми листьями» стоит после определяемого слова «дорога» и выделяется запятыми."
+                },
+                {
+                    id: "1_14", num: 14, type: "choice",
+                    question: "Сколько грамматических основ в предложении: «Гроза прошла, но ветер ещё долго шумел в верхушках деревьев и гнул тонкие ветки берёз»?",
+                    options: [
+                        "Одна основа",
+                        "Две основы",
+                        "Три основы",
+                        "Четыре основы"
+                    ],
+                    correctIndex: 1,
+                    explanation: "Первая основа: «гроза прошла». Вторая основа: «ветер шумел и гнул» (одно подлежащее и два однородных сказуемых). Итого 2 грамматические основы."
+                },
+                {
+                    id: "1_15", num: 15, type: "choice",
+                    question: "Какое слово в предложении «Ребята, вы, несомненно, подготовились к уроку» является вводным?",
+                    options: [
+                        "Ребята",
+                        "вы",
+                        "несомненно",
+                        "к уроку"
+                    ],
+                    correctIndex: 2,
+                    explanation: "«Несомненно» — вводное слово со значением уверенности. «Ребята» — это обращение, а не вводное слово."
+                }
+            ],
+
+            // ==================== ТЕМА 2: СЛОЖНОЕ ПРЕДЛОЖЕНИЕ (СП) ====================
+            2: [
+                // 1-5: Вписать ответ
+                {
+                    id: "2_1", num: 1, type: "fill",
+                    prompt: "Впишите пропущенный знак препинания (запятую) на границе двух простых предложений в составе сложного:",
+                    before: "Прозвенел звонок",
+                    after: " и урок русского языка начался.",
+                    placeholder: "знак",
+                    answers: [","],
+                    explanation: "Две грамматические основы («звонок прозвенел» и «урок начался») соединены сочинительным союзом «и». На границе частей сложного предложения ставится запятая."
+                },
+                {
+                    id: "2_2", num: 2, type: "fill",
+                    prompt: "Впишите пропущенный подчинительный союз причины (например: потому что) в сложноподчинённое предложение:",
+                    before: "Мы остались дома, ",
+                    after: " на улице начался сильный ливень.",
+                    placeholder: "союз",
+                    answers: ["потому что", "так как", "ибо"],
+                    explanation: "От главной части «Мы остались дома» задаётся вопрос «почему?». Придаточное причины присоединяется подчинительным союзом «потому что» или «так как»."
+                },
+                {
+                    id: "2_3", num: 3, type: "fill",
+                    prompt: "Впишите пропущенную аббревиатуру (БСП, ССП или СПП) для предложения без союзов: «Солнце зашло за горизонт, на город опустились сумерки».",
+                    before: "Это предложение по способу связи частей является ",
+                    after: ".",
+                    placeholder: "БСП / ССП / СПП",
+                    answers: ["бсп"],
+                    explanation: "Между частями «солнце зашло» и «опустились сумерки» нет союзов — они связаны только интонацией и смыслом. Это бессоюзное сложное предложение (БСП)."
+                },
+                {
+                    id: "2_4", num: 4, type: "fill",
+                    prompt: "Впишите цифру (числом), сколько грамматических основ в предложении: «Наступила весна, растаял снег, и зажурчали весёлые ручьи».",
+                    before: "Количество грамматических основ в этом предложении — ",
+                    after: ".",
+                    placeholder: "цифра",
+                    answers: ["3", "три"],
+                    explanation: "Основа 1: «наступила весна». Основа 2: «растаял снег». Основа 3: «зажурчали ручьи». Всего 3 основы."
+                },
+                {
+                    id: "2_5", num: 5, type: "fill",
+                    prompt: "Впишите пропущенный подчинительный союз времени в начало предложения:",
+                    before: "",
+                    after: " закончились уроки, мы всем классом пошли в парк.",
+                    placeholder: "союз",
+                    answers: ["когда", "как только", "после того как"],
+                    explanation: "Придаточное времени отвечает на вопрос «когда?» и присоединяется союзом «Когда» (или «Как только»)."
+                },
+                // 6-10: Соотнести
+                {
+                    id: "2_6", num: 6, type: "match",
+                    prompt: "Соотнесите сложное предложение с его типом:",
+                    pairs: [
+                        { left: "Ветер стих, и на море установился полный штиль.", right: "Сложносочинённое (ССП)" },
+                        { left: "Мы знали, что экзамен пройдёт успешно.", right: "Сложноподчинённое (СПП)" },
+                        { left: "Прозвенел звонок: началась перемена.", right: "Бессоюзное сложное (БСП)" }
+                    ],
+                    explanation: "В 1-м предложении равноправные части связаны сочинительным союзом «и» (ССП); во 2-м — зависимая часть с подчинительным союзом «что» (СПП); в 3-м союзов нет (БСП)."
+                },
+                {
+                    id: "2_7", num: 7, type: "match",
+                    prompt: "Соотнесите вид сложного предложения с его графической схемой:",
+                    pairs: [
+                        { left: "Сложносочинённое предложение (ССП)", right: "[ — = ], и [ — = ]." },
+                        { left: "Сложноподчинённое предложение (СПП)", right: "[ — = ], (чтобы — =)." },
+                        { left: "Бессоюзное сложное предложение (БСП)", right: "[ — = ], [ — = ]." }
+                    ],
+                    explanation: "В ССП используются квадратные скобки и сочинительный союз между ними; в СПП главная часть в квадратных скобках, а придаточная — в круглых; в БСП — квадратные скобки без союза."
+                },
+                {
+                    id: "2_8", num: 8, type: "match",
+                    prompt: "Соотнесите средства связи с видом сложного предложения:",
+                    pairs: [
+                        { left: "Сочинительные союзы (и, а, но, однако, или)", right: "Сложносочинённое предложение (ССП)" },
+                        { left: "Подчинительные союзы и союзные слова (что, когда, если, который)", right: "Сложноподчинённое предложение (СПП)" },
+                        { left: "Только интонация и смысл (без союзов)", right: "Бессоюзное сложное предложение (БСП)" }
+                    ],
+                    explanation: "Вид союзного сложного предложения определяется по разряду союза, который соединяет его части."
+                },
+                {
+                    id: "2_9", num: 9, type: "match",
+                    prompt: "Соотнесите предложение с его синтаксической характеристикой:",
+                    pairs: [
+                        { left: "Сверкнула молния, и грянул гром.", right: "Сложное союзное (ССП)" },
+                        { left: "Сверкнула молния и осветила всё поле.", right: "Простое с однородными сказуемыми" },
+                        { left: "Сверкнула молния — грянул гром.", right: "Сложное бессоюзное (БСП)" }
+                    ],
+                    explanation: "В предложении «Сверкнула молния и осветила всё поле» одно подлежащее «молния» и два сказуемых («сверкнула и осветила») — это простое предложение."
+                },
+                {
+                    id: "2_10", num: 10, type: "match",
+                    prompt: "Соотнесите начало предложения с его продолжением так, чтобы получилось СПП:",
+                    pairs: [
+                        { left: "Я возьму зонт,", right: "если пойдёт дождь." },
+                        { left: "Мы пришли в библиотеку,", right: "чтобы подготовить доклад." },
+                        { left: "Учитель похвалил класс,", right: "потому что все отлично написали диктант." }
+                    ],
+                    explanation: "Придаточные части присоединяются подчинительными союзами «если» (условие), «чтобы» (цель) и «потому что» (причина)."
+                },
+                // 11-15: Тестовые
+                {
+                    id: "2_11", num: 11, type: "choice",
+                    question: "Какое из данных предложений является бессоюзным сложным (БСП)?",
+                    options: [
+                        "Когда закончится урок, мы пойдём в библиотеку.",
+                        "Метель утихла, но дороги всё ещё были занесены снегом.",
+                        "Наступила осень: листья на берёзах пожелтели и начали опадать.",
+                        "Мы долго ждали автобус, который задерживался из-за пробки."
+                    ],
+                    correctIndex: 2,
+                    explanation: "В предложении «Наступила осень: листья на берёзах пожелтели и начали опадать» две грамматические основы («осень наступила» и «листья пожелтели и начали опадать»), но между частями нет союза."
+                },
+                {
+                    id: "2_12", num: 12, type: "choice",
+                    question: "Чем сложносочинённое предложение (ССП) отличается от сложноподчинённого (СПП)?",
+                    options: [
+                        "В ССП всегда три грамматические основы, а в СПП — две.",
+                        "В ССП части равноправны по смыслу, а в СПП одна часть зависит от другой (к ней задаётся вопрос).",
+                        "В ССП никогда не ставится запятая между частями.",
+                        "В СПП не используются союзы."
+                    ],
+                    correctIndex: 1,
+                    explanation: "Главное отличие ССП от СПП — синтаксическое равноправие частей: в ССП от одной части нельзя задать вопрос к другой, а в СПП от главной части задаётся вопрос к придаточной."
+                },
+                {
+                    id: "2_13", num: 13, type: "choice",
+                    question: "Укажите сложноподчинённое предложение (СПП):",
+                    options: [
+                        "Солнце уже поднялось высоко, но в лесу было прохладно.",
+                        "Наступила весна, и прилетели перелётные птицы.",
+                        "Книга, которую я взял в библиотеке, оказалась очень увлекательной.",
+                        "Небо затянуло тучами, подул холодный северный ветер."
+                    ],
+                    correctIndex: 2,
+                    explanation: "Придаточная определительная часть «которую я взял в библиотеке» находится внутри главной части «Книга оказалась очень увлекательной» и присоединяется союзным словом «которую»."
+                },
+                {
+                    id: "2_14", num: 14, type: "choice",
+                    question: "Укажите предложение, которое НЕ является сложным:",
+                    options: [
+                        "Наступил вечер, и зажглись уличные фонари.",
+                        "Осенью птицы улетают на юг, а звери готовятся к зиме.",
+                        "После дождя воздух стал свежим, чистым и прохладным.",
+                        "Стало известно, что соревнования перенесли на субботу."
+                    ],
+                    correctIndex: 2,
+                    explanation: "В предложении «После дождя воздух стал свежим, чистым и прохладным» только одна грамматическая основа («воздух стал свежим, чистым и прохладным»). Это простое осложнённое предложение."
+                },
+                {
+                    id: "2_15", num: 15, type: "choice",
+                    question: "Сколько простых предложений входит в состав сложного: «Когда мы вышли из дома, дождь уже прекратился, и над городом появилась яркая радуга»?",
+                    options: [
+                        "Два",
+                        "Три",
+                        "Четыре",
+                        "Одно"
+                    ],
+                    correctIndex: 1,
+                    explanation: "Три грамматические основы: 1) «мы вышли»; 2) «дождь прекратился»; 3) «появилась радуга». Это сложное предложение с разными видами связи (подчинительной и сочинительной)."
+                }
+            ],
+
+            // ==================== ТЕМА 3: СОЮЗЫ В ССП ====================
+            3: [
+                // 1-5: Вписать ответ
+                {
+                    id: "3_1", num: 1, type: "fill",
+                    prompt: "Впишите пропущенный противительный союз (но / однако) в сложносочинённое предложение:",
+                    before: "Задача на олимпиаде была сложной, ",
+                    after: " девятиклассники успешно её решили.",
+                    placeholder: "союз",
+                    answers: ["но", "однако", "зато"],
+                    explanation: "Между частями ССП выражено противопоставление (ожидалось, что не решат, но решили), поэтому подходят противительные союзы «но», «однако» или «зато»."
+                },
+                {
+                    id: "3_2", num: 2, type: "fill",
+                    prompt: "Впишите вторую часть повторяющегося разделительного союза «то... ___»:",
+                    before: "То солнце выглянет из-за облаков, ",
+                    after: " снова пойдёт мелкий осенний дождь.",
+                    placeholder: "союз",
+                    answers: ["то"],
+                    explanation: "Повторяющийся разделительный союз «то... то» указывает на чередование явлений в сложносочинённом предложении."
+                },
+                {
+                    id: "3_3", num: 3, type: "fill",
+                    prompt: "Впишите пропущенный соединительный союз «да» (в значении «и») в ССП:",
+                    before: "Светит яркое весеннее солнце, ",
+                    after: " весело поют птицы в саду.",
+                    placeholder: "союз (2 буквы)",
+                    answers: ["да"],
+                    explanation: "Союз «да» здесь легко заменяется на «и» («Светит солнце, и поют птицы»), поэтому является соединительным."
+                },
+                {
+                    id: "3_4", num: 4, type: "fill",
+                    prompt: "Впишите пропущенный разделительный союз (или / либо) в ССП со значением выбора:",
+                    before: "Или мы сейчас выходим из дома, ",
+                    after: " мы опоздаем на первый урок.",
+                    placeholder: "союз",
+                    answers: ["или", "либо"],
+                    explanation: "Повторяющийся разделительный союз «или... или» (или «либо») указывает на взаимоисключение — возможен только один из двух вариантов."
+                },
+                {
+                    id: "3_5", num: 5, type: "fill",
+                    prompt: "Впишите пропущенный противительный союз «зато» в ССП:",
+                    before: "Путь через перевал был долгим, ",
+                    after: " с вершины открывался потрясающий вид на горы.",
+                    placeholder: "союз",
+                    answers: ["зато", "но", "однако"],
+                    explanation: "Союз «зато» (пишется слитно, равен по значению союзу «но») выражает возмещение, компенсацию: путь долгий, но зато красивый вид."
+                },
+                // 6-10: Соотнести
+                {
+                    id: "3_6", num: 6, type: "match",
+                    prompt: "Соотнесите сочинительный союз с его разрядом:",
+                    pairs: [
+                        { left: "и, да (= и), ни... ни, тоже, также", right: "Соединительные союзы" },
+                        { left: "а, но, да (= но), однако, зато", right: "Противительные союзы" },
+                        { left: "или, либо, то... то, не то... не то", right: "Разделительные союзы" }
+                    ],
+                    explanation: "Это три основных разряда сочинительных союзов, которые связывают равноправные части в сложносочинённом предложении."
+                },
+                {
+                    id: "3_7", num: 7, type: "match",
+                    prompt: "Соотнесите предложение с разрядом союза, который в нём использован:",
+                    pairs: [
+                        { left: "Наступил вечер, и в окнах домов зажёгся свет.", right: "Соединительный союз" },
+                        { left: "Хотелось погулять в парке, однако начался дождь.", right: "Противительный союз" },
+                        { left: "Не то ветер шумит в трубе, не то кто-то стучит в дверь.", right: "Разделительный союз" }
+                    ],
+                    explanation: "«И» — соединительный; «однако» (= но) — противительный; «не то... не то» — разделительный."
+                },
+                {
+                    id: "3_8", num: 8, type: "match",
+                    prompt: "Определите значение союза «ДА» в каждом предложении:",
+                    pairs: [
+                        { left: "Только иволги кричат, да кукушки наперебой отсчитывают годы.", right: "Соединительный (= И)" },
+                        { left: "Близок локоть, да не укусишь.", right: "Противительный (= НО)" },
+                        { left: "В саду расцвели яблони, да зазеленела молодая трава.", right: "Соединительный (= И)" }
+                    ],
+                    explanation: "Чтобы определить разряд союза «да», замените его синонимом: если подходит «и» — соединительный, если «но» — противительный."
+                },
+                {
+                    id: "3_9", num: 9, type: "match",
+                    prompt: "Соотнесите союзы-синонимы из одной группы:",
+                    pairs: [
+                        { left: "однако", right: "но" },
+                        { left: "либо", right: "или" },
+                        { left: "также", right: "и" },
+                        { left: "то ли... то ли", right: "не то... не то" }
+                    ],
+                    explanation: "«Однако» и «но» — противительные; «либо» и «или» — разделительные; «также» и «и» — соединительные; «то ли... то ли» и «не то... не то» — разделительные."
+                },
+                {
+                    id: "3_10", num: 10, type: "match",
+                    prompt: "Соотнесите союз с особенностью его правописания:",
+                    pairs: [
+                        { left: "зато (= но)", right: "Пишется слитно (союз)" },
+                        { left: "тоже (= также, и)", right: "Пишется слитно (союз)" },
+                        { left: "не то... не то", right: "Пишется раздельно (повторяющийся союз)" }
+                    ],
+                    explanation: "Союзы «зато» (= но) и «тоже» (= и) пишутся слитно, в отличие от местоимений с предлогами/частицами («за то дерево», «то же самое»)."
+                },
+                // 11-15: Тестовые
+                {
+                    id: "3_11", num: 11, type: "choice",
+                    question: "К какой группе относится союз «ОДНАКО» в сложносочинённом предложении: «Задача была трудной, однако мы её решили»?",
+                    options: [
+                        "Соединительный союз",
+                        "Противительный союз",
+                        "Разделительный союз",
+                        "Подчинительный союз"
+                    ],
+                    correctIndex: 1,
+                    explanation: "Союз «однако» легко заменяется на союз «но» и выражает противопоставление — это противительный сочинительный союз."
+                },
+                {
+                    id: "3_12", num: 12, type: "choice",
+                    question: "В каком ряду перечислены ТОЛЬКО разделительные сочинительные союзы?",
+                    options: [
+                        "и, да (= и), ни... ни, тоже",
+                        "а, но, зато, однако",
+                        "или, либо, то... то, не то... не то",
+                        "что, чтобы, потому что, если"
+                    ],
+                    correctIndex: 2,
+                    explanation: "Разделительные союзы указывают на выбор или чередование событий: «или», «либо», «то... то», «не то... не то», «то ли... то ли»."
+                },
+                {
+                    id: "3_13", num: 13, type: "choice",
+                    question: "В каком предложении союз «ДА» является противительным (равен по значению союзу «НО»)?",
+                    options: [
+                        "На небе сияли звёзды, да светила полная луна.",
+                        "Хотелось бы поехать на экскурсию, да времени совсем не осталось.",
+                        "В лесу пахло хвоей, да пели утренние птицы.",
+                        "Шумел камыш, да тихо плескалась вода у берега."
+                    ],
+                    correctIndex: 1,
+                    explanation: "Во втором предложении «да» заменяется на «но» («Хотелось бы поехать, но времени не осталось»). В остальных вариантах «да» = «и»."
+                },
+                {
+                    id: "3_14", num: 14, type: "choice",
+                    question: "Укажите сложносочинённое предложение с соединительным союзом:",
+                    options: [
+                        "То ли шелестела листва, то ли вдалеке шумел ручей.",
+                        "Мал золотник, да дорог.",
+                        "Ни один лист не шелохнулся, ни одна птица не подала голоса.",
+                        "Мы торопились на поезд, зато приехали на вокзал заранее."
+                    ],
+                    correctIndex: 2,
+                    explanation: "Повторяющийся союз «ни... ни» относится к соединительным союзам (при отрицании)."
+                },
+                {
+                    id: "3_15", num: 15, type: "choice",
+                    question: "Где в сложносочинённом предложении обычно располагается сочинительный союз?",
+                    options: [
+                        "Внутри первой части перед подлежащим",
+                        "Между простыми предложениями (не входит ни в одну из частей)",
+                        "В самом конце второго простого предложения",
+                        "Всегда в начале всего сложного предложения"
+                    ],
+                    correctIndex: 1,
+                    explanation: "Сочинительный союз в ССП не является членом предложения и не входит ни в первую, ни во вторую часть — на схеме он выносится за пределы квадратных скобок: [ — = ], и [ — = ]."
+                }
+            ],
+
+            // ==================== ТЕМА 4: СМЫСЛОВЫЕ ОТНОШЕНИЯ В ССП ====================
+            4: [
+                // 1-5: Вписать ответ
+                {
+                    id: "4_1", num: 1, type: "fill",
+                    prompt: "Впишите пропущенное слово (одновременность / чередование / противопоставление), определяющее смысл ССП: «Сверкала молния, и гремел гром».",
+                    before: "Части этого ССП выражают ",
+                    after: " действий.",
+                    placeholder: "смысл",
+                    answers: ["одновременность"],
+                    explanation: "Молния сверкает и гром гремит в один и тот же момент времени — это одновременность действий."
+                },
+                {
+                    id: "4_2", num: 2, type: "fill",
+                    prompt: "Впишите пропущенный союз «и» для выражения последовательности действий:",
+                    before: "Дверь класса тихо открылась, ",
+                    after: " в кабинет вошёл директор школы.",
+                    placeholder: "союз",
+                    answers: ["и"],
+                    explanation: "Сначала дверь открылась, затем вошёл директор — соединительный союз «и» передаёт последовательность событий."
+                },
+                {
+                    id: "4_3", num: 3, type: "fill",
+                    prompt: "Впишите слово «следствие», чтобы завершить вывод о смысле ССП: «Ударил сильный мороз, и лужи покрылись льдом».",
+                    before: "Первая часть указывает на причину, а вторая — на ",
+                    after: ".",
+                    placeholder: "слово",
+                    answers: ["следствие", "результат"],
+                    explanation: "Мороз (причина) привёл к тому, что лужи замёрзли (следствие). Это причинно-следственные отношения."
+                },
+                {
+                    id: "4_4", num: 4, type: "fill",
+                    prompt: "Впишите пропущенный противительный союз «а» для сопоставления двух явлений:",
+                    before: "В нашем городе уже выпал первый снег, ",
+                    after: " на юге страны ещё цветут розы.",
+                    placeholder: "союз",
+                    answers: ["а", "но"],
+                    explanation: "Союз «а» сопоставляет два разных явления (снег здесь, а розы на юге)."
+                },
+                {
+                    id: "4_5", num: 5, type: "fill",
+                    prompt: "Впишите слово «чередование» для описания смысла ССП: «То падал крупный снег, то дул пронизывающий ветер».",
+                    before: "Повторяющийся союз «то... то» указывает на ",
+                    after: " явлений природы.",
+                    placeholder: "слово",
+                    answers: ["чередование"],
+                    explanation: "События сменяют друг друга во времени (сначала снег, потом ветер, затем снова снег) — это чередование."
+                },
+                // 6-10: Соотнести
+                {
+                    id: "4_6", num: 6, type: "match",
+                    prompt: "Соотнесите ССП с соединительным союзом «И» с оттенком его значения:",
+                    pairs: [
+                        { left: "Шумел ветер, и качались верхушки сосен.", right: "Одновременность действий" },
+                        { left: "Учитель задал вопрос, и ученик поднял руку.", right: "Последовательность действий" },
+                        { left: "Начался сильный ливень, и улицы мгновенно опустели.", right: "Причина и следствие" }
+                    ],
+                    explanation: "Союз «и» универсален: он может передавать одновременность, последовательность или причинно-следственную связь."
+                },
+                {
+                    id: "4_7", num: 7, type: "match",
+                    prompt: "Соотнесите ССП с разделительным союзом с его смысловым значением:",
+                    pairs: [
+                        { left: "То дождь стучит по крыше, то ветер воет в трубе.", right: "Чередование событий" },
+                        { left: "Или мы успеем на электричку, или придётся ждать до утра.", right: "Взаимоисключение (выбор)" },
+                        { left: "Не то туман спускается с гор, не то дым стелется над рекой.", right: "Неопределённость (предположение)" }
+                    ],
+                    explanation: "«То... то» — чередование; «или... или» — взаимоисключение; «не то... не то» — неразличение/предположение."
+                },
+                {
+                    id: "4_8", num: 8, type: "match",
+                    prompt: "Соотнесите предложение с типом смысловых отношений:",
+                    pairs: [
+                        { left: "Солнце светит ярко, но воздух остаётся морозным.", right: "Противопоставление" },
+                        { left: "Взошло солнце, и туман над озером рассеялся.", right: "Причина и следствие" },
+                        { left: "То ли птица пролетела, то ли ветка хрустнула в кустах.", right: "Чередование / предположение" }
+                    ],
+                    explanation: "Союз «но» выражает противопоставление; «и» после восхода солнца — следствие; «то ли... то ли» — предположение."
+                },
+                {
+                    id: "4_9", num: 9, type: "match",
+                    prompt: "Соотнесите смысловые отношения с группой союзов, которая их выражает:",
+                    pairs: [
+                        { left: "Одновременность, последовательность, следствие", right: "Соединительные союзы" },
+                        { left: "Противопоставление и сопоставление", right: "Противительные союзы" },
+                        { left: "Чередование и взаимоисключение", right: "Разделительные союзы" }
+                    ],
+                    explanation: "Смысловые отношения между частями ССП напрямую зависят от разряда сочинительного союза."
+                },
+                {
+                    id: "4_10", num: 10, type: "match",
+                    prompt: "Соотнесите первую часть ССП со второй, чтобы получились отношения противопоставления:",
+                    pairs: [
+                        { left: "Я долго готовился к выступлению,", right: "однако перед выходом на сцену всё равно разволновался." },
+                        { left: "На дворе стоял май,", right: "а в горах ещё лежал глубокий снег." },
+                        { left: "Подъём в гору был крутым,", right: "зато наверху нас ждал горячий чай." }
+                    ],
+                    explanation: "Все три вторые части вводятся противительными союзами («однако», «а», «зато»)."
+                },
+                // 11-15: Тестовые
+                {
+                    id: "4_11", num: 11, type: "choice",
+                    question: "Какие смысловые отношения выражены между частями ССП: «То в дверь кто-то постучит, то за окном прошумит ветер»?",
+                    options: [
+                        "Противопоставление явлений",
+                        "Чередование явлений",
+                        "Причина и следствие",
+                        "Одновременность действий"
+                    ],
+                    correctIndex: 1,
+                    explanation: "Повторяющийся разделительный союз «то... то» указывает на чередование событий во времени."
+                },
+                {
+                    id: "4_12", num: 12, type: "choice",
+                    question: "Определите смысловые отношения в ССП: «Ударил сильный мороз, и вода в лужах мгновенно замёрзла».",
+                    options: [
+                        "Взаимоисключение",
+                        "Противопоставление",
+                        "Причинно-следственные отношения (причина и следствие)",
+                        "Чередование"
+                    ],
+                    correctIndex: 2,
+                    explanation: "Первая часть («ударил сильный мороз») — причина, вторая («вода замёрзла») — следствие."
+                },
+                {
+                    id: "4_13", num: 13, type: "choice",
+                    question: "В каком ССП выражена одновременность действий?",
+                    options: [
+                        "Прозвенел звонок, и все ученики быстро заняли свои места.",
+                        "За окном тихо падал пушистый снег, и в камине потрескивали дрова.",
+                        "Либо мы пойдём в кино, либо останемся играть в настольные игры.",
+                        "Дождь закончился, но лужи на асфальте ещё долго не высыхали."
+                    ],
+                    correctIndex: 1,
+                    explanation: "Снег падал и дрова потрескивали в один и тот же отрезок времени — это одновременность."
+                },
+                {
+                    id: "4_14", num: 14, type: "choice",
+                    question: "Какие отношения выражает союз «ИЛИ... ИЛИ» в предложении: «Или ты сейчас извинишься, или мы больше не будем разговаривать»?",
+                    options: [
+                        "Одновременность",
+                        "Взаимоисключение (необходимость выбора одного из вариантов)",
+                        "Последовательность",
+                        "Сопоставление"
+                    ],
+                    correctIndex: 1,
+                    explanation: "Союз «или... или» указывает на взаимоисключающие события: осуществиться может только одно из них."
+                },
+                {
+                    id: "4_15", num: 15, type: "choice",
+                    question: "Укажите ССП со значением последовательности действий:",
+                    options: [
+                        "Брат нажал на кнопку пульта, и экран телевизора загорелся.",
+                        "На небе сияла луна, и ярко мерцали далёкие звёзды.",
+                        "Мальчик хотел перепрыгнуть через ручей, но оступился.",
+                        "То скрипит половица, то зашуршит за обоями мышь."
+                    ],
+                    correctIndex: 0,
+                    explanation: "Сначала брат нажал на кнопку, и следом за этим загорелся экран — действия идут одно за другим."
+                }
+            ],
+
+            // ==================== ТЕМА 5: ПУНКТУАЦИЯ И ИСКЛЮЧЕНИЯ В ССП ====================
+            5: [
+                // 1-5: Вписать ответ
+                {
+                    id: "5_1", num: 1, type: "fill",
+                    prompt: "Впишите слово «нет» или «да»: нужна ли запятая перед союзом «И» в предложении «Утром светило яркое солнце и звонко пели птицы»?",
+                    before: "Запятая перед союзом «И» в этом предложении — ",
+                    after: " (впишите «да» или «нет»).",
+                    placeholder: "да / нет",
+                    answers: ["нет"],
+                    explanation: "Нет! Общий второстепенный член времени «Утром» относится к обеим частям («утром светило солнце» и «утром пели птицы»), поэтому запятая перед одиночным союзом «И» не ставится."
+                },
+                {
+                    id: "5_2", num: 2, type: "fill",
+                    prompt: "Впишите пропущенный знак препинания (запятую) в ССП без общих элементов:",
+                    before: "Наступил тихий вечер",
+                    after: " и на тёмном небе зажглись первые звёзды.",
+                    placeholder: "знак",
+                    answers: [","],
+                    explanation: "В начале предложения нет общего второстепенного члена, поэтому две грамматические основы («наступил вечер» и «зажглись звёзды») разделяются запятой перед союзом «и»."
+                },
+                {
+                    id: "5_3", num: 3, type: "fill",
+                    prompt: "Впишите общий второстепенный член места из предложения: «В парке шелестела листва и щебетали синицы».",
+                    before: "Общим второстепенным членом для обеих частей здесь является сочетание слов: «",
+                    after: "».",
+                    placeholder: "два слова",
+                    answers: ["в парке"],
+                    explanation: "«В парке» отвечает на вопрос «где?» и относится сразу к двум основам: «в парке шелестела листва» и «в парке щебетали синицы»."
+                },
+                {
+                    id: "5_4", num: 4, type: "fill",
+                    prompt: "Впишите знак препинания (запятую) перед противительным союзом «но» (даже при наличии общего члена перед «но» запятая ставится!):",
+                    before: "Вчера в городе ярко светило солнце",
+                    after: " но дул холодный северный ветер.",
+                    placeholder: "знак",
+                    answers: [","],
+                    explanation: "Правило об общем второстепенном члене действует ТОЛЬКО для одиночных соединительных и разделительных союзов (и, да = и, или, либо). Перед противительным союзом «но» запятая ставится ВСЕГДА!"
+                },
+                {
+                    id: "5_5", num: 5, type: "fill",
+                    prompt: "Впишите пропущенный знак препинания (запятую) в ССП с повторяющимся союзом «и... и»:",
+                    before: "И солнце светит",
+                    after: " и ветерок ласково колышет траву.",
+                    placeholder: "знак",
+                    answers: [","],
+                    explanation: "При повторяющемся союзе «и... и» запятая между частями ССП ставится обязательно."
+                },
+                // 6-10: Соотнести
+                {
+                    id: "5_6", num: 6, type: "match",
+                    prompt: "Соотнесите предложение-исключение с причиной, по которой в нём НЕ ставится запятая перед союзом «И»:",
+                    pairs: [
+                        { left: "В лесу пели птицы и шумели высокие сосны.", right: "Общий второстепенный член (где? — в лесу)" },
+                        { left: "Когда мы вернулись домой, уже стемнело и зажглись фонари.", right: "Общее придаточное предложение" },
+                        { left: "К счастью, дождь закончился и выглянуло солнце.", right: "Общее вводное слово" },
+                        { left: "Который сейчас час и когда приедет автобус?", right: "Обе части — вопросительные предложения" }
+                    ],
+                    explanation: "Это 4 классических случая, когда запятая между частями ССП перед одиночным союзом «и» не ставится."
+                },
+                {
+                    id: "5_7", num: 7, type: "match",
+                    prompt: "Определите, нужна ли запятая на месте пропуска (?) в каждом предложении:",
+                    pairs: [
+                        { left: "Зимой в степи гуляет вьюга (?) и трещат сильные морозы.", right: "Запятая НЕ нужна (есть общий член «зимой в степи»)" },
+                        { left: "Прошла зима (?) и наступила тёплая весна.", right: "Запятая НУЖНА (нет общих элементов)" },
+                        { left: "Весной тает снег (?) но по ночам ещё бывают заморозки.", right: "Запятая НУЖНА (противительный союз «но»)" }
+                    ],
+                    explanation: "В 1-м есть общий второстепенный член; во 2-м нет общих элементов; в 3-м использован противительный союз «но», перед которым запятая ставится всегда."
+                },
+                {
+                    id: "5_8", num: 8, type: "match",
+                    prompt: "Соотнесите начало предложения с концовкой так, чтобы запятая перед «И» НЕ требовалась:",
+                    pairs: [
+                        { left: "После дождя в саду заблестели мокрые листья", right: "и запели проснувшиеся птицы." },
+                        { left: "Когда прозвенел звонок, ученики зашли в класс", right: "и началась контрольная работа." },
+                        { left: "К нашему удивлению, погода быстро наладилась", right: "и ветер полностью стих." }
+                    ],
+                    explanation: "Во всех трёх вариантах общий элемент в начале предложения («После дождя в саду», «Когда прозвенел звонок», «К нашему удивлению») объединяет обе части ССП."
+                },
+                {
+                    id: "5_9", num: 9, type: "match",
+                    prompt: "Соотнесите знак препинания в ССП с условием его постановки:",
+                    pairs: [
+                        { left: "Запятая ( , )", right: "Обычный знак между частями ССП без общих элементов" },
+                        { left: "Отсутствие запятой", right: "Есть общий второстепенный член при одиночном союзе «и»" },
+                        { left: "Тире ( — )", right: "Резкое противопоставление или быстрая смена событий во второй части" }
+                    ],
+                    explanation: "Помимо стандартной запятой и её отсутствия при общем члене, в ССП может ставиться тире при быстрой смене событий: «Вдруг грянул гром — и хлынул ливень»."
+                },
+                {
+                    id: "5_10", num: 10, type: "match",
+                    prompt: "Проверьте, является ли выделенное слово в начале предложения ОБЩИМ для обеих частей:",
+                    pairs: [
+                        { left: "Вчера [шёл дождь] и [дул сильный ветер].", right: "Да, общее (вчера шёл дождь и вчера дул ветер)" },
+                        { left: "Вчера [шёл дождь], и [сегодня на улице огромные лужи].", right: "Нет, не общее (во второй части есть своё слово «сегодня»)" },
+                        { left: "На берегу [горели костры] и [слышались песни].", right: "Да, общее (на берегу горели и на берегу слышались)" }
+                    ],
+                    explanation: "Во втором предложении во второй части есть собственное обстоятельство времени «сегодня», поэтому слово «вчера» относится только к первой части, и запятая нужна!"
+                },
+                // 11-15: Тестовые
+                {
+                    id: "5_11", num: 11, type: "choice",
+                    question: "В каком предложении запятая перед союзом «И» НЕ ставится?",
+                    options: [
+                        "Закончились летние каникулы, и школьники вернулись за парты.",
+                        "Ранним утром над рекой стелился туман и кричали чайки.",
+                        "Солнце уже скрылось за лесом, и на землю опустилась прохлада.",
+                        "Прозвучал финальный свисток, и болельщики радостно зааплодировали."
+                    ],
+                    correctIndex: 1,
+                    explanation: "В предложении «Ранним утром над рекой стелился туман и кричали чайки» есть общие второстепенные члены «ранним утром над рекой», объединяющие обе части."
+                },
+                {
+                    id: "5_12", num: 12, type: "choice",
+                    question: "Укажите предложение, в котором перед союзом «И» НУЖНА запятая (несмотря на слово в начале):",
+                    options: [
+                        "В лесу уже распустились подснежники и запели соловьи.",
+                        "Осенью листья желтеют и опадают на землю.",
+                        "Вчера целый день лил дождь и сегодня на дорогах образовались лужи.",
+                        "После тренировки болели мышцы и чувствовалась приятная усталость."
+                    ],
+                    correctIndex: 2,
+                    explanation: "В варианте 3 слово «Вчера» относится только к первой части, так как во второй части есть своё обстоятельство времени «сегодня». Значит, общего члена нет, и запятая нужна!"
+                },
+                {
+                    id: "5_13", num: 13, type: "choice",
+                    question: "Почему не ставится запятая в предложении: «Когда мы вышли из поезда, перрон был уже пуст и только дежурный проверял семафоры»?",
+                    options: [
+                        "Потому что это простое предложение с однородными членами.",
+                        "Потому что у двух частей ССП есть общее придаточное предложение «Когда мы вышли из поезда».",
+                        "Потому что союз «и» здесь является подчинительным.",
+                        "Потому что обе части являются восклицательными."
+                    ],
+                    correctIndex: 1,
+                    explanation: "Придаточное времени «Когда мы вышли из поезда» относится сразу к обеим частям ССП («перрон был пуст» и «дежурный проверял»), поэтому запятая перед «и» не ставится."
+                },
+                {
+                    id: "5_14", num: 14, type: "choice",
+                    question: "Перед каким из этих союзов запятая ставится ВСЕГДА, даже если в начале предложения есть общий второстепенный член?",
+                    options: [
+                        "Одиночный союз «и»",
+                        "Одиночный союз «да» в значении «и»",
+                        "Противительный союз «но»",
+                        "Одиночный союз «или»"
+                    ],
+                    correctIndex: 2,
+                    explanation: "Правило об общем элементе работает только для одиночных соединительных и разделительных союзов (и, да = и, или, либо). Перед противительными союзами (а, но, однако) запятая ставится всегда."
+                },
+                {
+                    id: "5_15", num: 15, type: "choice",
+                    question: "Укажите предложение с пунктуационной ошибкой:",
+                    options: [
+                        "В саду цвёл жасмин и благоухали розы.",
+                        "К счастью, гроза быстро прошла, и мы продолжили путь.",
+                        "Который сейчас час и когда отправляется наш поезд?",
+                        "Дует лёгкий ветерок, и облака медленно плывут по небу."
+                    ],
+                    correctIndex: 1,
+                    explanation: "Ошибка во втором предложении: вводное слово «К счастью» является общим для обеих частей ССП, поэтому запятая перед союзом «и» лишняя!"
+                }
+            ],
+
+            // ==================== ТЕМА 6: СХЕМЫ И РАЗБОР ССП ====================
+            6: [
+                // 1-5: Вписать ответ
+                {
+                    id: "6_1", num: 1, type: "fill",
+                    prompt: "Впишите пропущенный сочинительный союз «но» в схему сложносочинённого предложения: «[ — = ], ___ [ — = ].»",
+                    before: "Схема предложения «Ветер утих, но море ещё волновалось»: [ — = ], ",
+                    after: " [ — = ].",
+                    placeholder: "союз",
+                    answers: ["но"],
+                    explanation: "В схеме сложносочинённого предложения союз записывается между квадратными скобками без изменений."
+                },
+                {
+                    id: "6_2", num: 2, type: "fill",
+                    prompt: "Впишите тип предложения по цели высказывания (повествовательное / вопросительное / побудительное) для характеристики: «Прошёл дождь, и воздух стал свежим».",
+                    before: "Характеристика: предложение ",
+                    after: ", невосклицательное, сложное, союзное, ССП.",
+                    placeholder: "тип по цели",
+                    answers: ["повествовательное"],
+                    explanation: "В предложении сообщается о факте (в конце стоит точка), поэтому по цели высказывания оно повествовательное."
+                },
+                {
+                    id: "6_3", num: 3, type: "fill",
+                    prompt: "Впишите слово «односоставная» или «двусоставная» для второй части предложения: «Ветер дул с севера, однако в доме было тепло».",
+                    before: "Вторая часть («в доме было тепло») по наличию главных членов — ",
+                    after: " (безличная).",
+                    placeholder: "характеристика",
+                    answers: ["односоставная"],
+                    explanation: "Во второй части есть только сказуемое «было тепло», подлежащего нет и быть не может — это односоставная безличная часть."
+                },
+                {
+                    id: "6_4", num: 4, type: "fill",
+                    prompt: "Впишите символ сказуемого (=) в схему второй части предложения: «Наступил вечер, и зажглись звёзды».",
+                    before: "Схема: [ = — ], и [ ",
+                    after: " — ].",
+                    placeholder: "знак (=)",
+                    answers: ["="],
+                    explanation: "Во второй части сначала идёт сказуемое «зажглись» (=), а затем подлежащее «звёзды» (—). Верная схема: [ = — ], и [ = — ]."
+                },
+                {
+                    id: "6_5", num: 5, type: "fill",
+                    prompt: "Впишите слово «распространённая» или «нераспространённая» для первой части предложения: «Светало, и туристы начали собирать палатки».",
+                    before: "Первая часть («Светало») состоит только из сказуемого и не имеет второстепенных членов, поэтому она ",
+                    after: ".",
+                    placeholder: "характеристика",
+                    answers: ["нераспространённая", "нераспространенная"],
+                    explanation: "Если в простой части в составе сложного нет второстепенных членов (только грамматическая основа), она называется нераспространённой."
+                },
+                // 6-10: Соотнести
+                {
+                    id: "6_6", num: 6, type: "match",
+                    prompt: "Соотнесите предложение с его точной синтаксической схемой:",
+                    pairs: [
+                        { left: "Холодный ветер дул с севера, однако в доме было тепло.", right: "[ — = ], однако [ = ]." },
+                        { left: "Прозвенел звонок, и ученики вошли в класс.", right: "[ = — ], и [ — = ]." },
+                        { left: "В лесу пели птицы и шумели сосны.", right: "[ = — ] и [ = — ]." }
+                    ],
+                    explanation: "Обратите внимание на порядок подлежащего (—) и сказуемого (=), а также на отсутствие запятой в третьем примере из-за общего члена «В лесу»."
+                },
+                {
+                    id: "6_7", num: 7, type: "match",
+                    prompt: "Соотнесите шаг синтаксического разбора ССП с его содержанием:",
+                    pairs: [
+                        { left: "Шаг 1", right: "Выделить грамматические основы в каждой части" },
+                        { left: "Шаг 2", right: "Найти сочинительный союз и определить его разряд" },
+                        { left: "Шаг 3", right: "Определить смысловые отношения между частями" },
+                        { left: "Шаг 4", right: "Дать характеристику каждой части и начертить схему" }
+                    ],
+                    explanation: "Соблюдение чёткого алгоритма позволяет избежать ошибок при полном синтаксическом разборе ССП."
+                },
+                {
+                    id: "6_8", num: 8, type: "match",
+                    prompt: "Соотнесите схему с типом сложного предложения:",
+                    pairs: [
+                        { left: "[ — = ], но [ — = ].", right: "Сложносочинённое с противительным союзом" },
+                        { left: "То [ — = ], то [ — = ].", right: "Сложносочинённое с повторяющимся разделительным союзом" },
+                        { left: "[ — = ], и [ = ].", right: "ССП (1-я часть двусоставная, 2-я односоставная)" }
+                    ],
+                    explanation: "Схема наглядно отражает структуру каждой части и место сочинительного союза."
+                },
+                {
+                    id: "6_9", num: 9, type: "match",
+                    prompt: "Соотнесите часть предложения «Вечер был тёплым, и мы долго гуляли по набережной» с её разбором:",
+                    pairs: [
+                        { left: "Вечер был тёплым", right: "Двусоставная, нераспространённая (только подлежащее и составное сказуемое)" },
+                        { left: "и", right: "Сочинительный соединительный союз (не член предложения)" },
+                        { left: "мы долго гуляли по набережной", right: "Двусоставная, распространённая (есть обстоятельства «долго» и «по набережной»)" }
+                    ],
+                    explanation: "В первой части «вечер» — подлежащее, «был тёплым» — составное именное сказуемое; второстепенных членов нет."
+                },
+                {
+                    id: "6_10", num: 10, type: "match",
+                    prompt: "Соотнесите пункт пунктуационного разбора с его объяснением в предложении: «Солнце зашло, и сразу стало прохладно».",
+                    pairs: [
+                        { left: "Запятая перед союзом «и»", right: "Разделяет два простых предложения в составе ССП" },
+                        { left: "Точка в конце предложения", right: "Знак завершения повествовательного невосклицательного предложения" },
+                        { left: "Отсутствие запятых внутри частей", right: "Простые части в составе ССП не осложнены" }
+                    ],
+                    explanation: "Пунктуационный разбор объясняет каждый знак препинания в конце и внутри предложения."
+                },
+                // 11-15: Тестовые
+                {
+                    id: "6_11", num: 11, type: "choice",
+                    question: "Выберите правильную схему для предложения: «Холодный ветер дул с севера, однако в доме было тепло и уютно».",
+                    options: [
+                        "[ — = ], однако [ — = ].",
+                        "[ — = ], однако [ = ].",
+                        "[ — = , однако = ].",
+                        "[ = — ], однако ( = )."
+                    ],
+                    correctIndex: 1,
+                    explanation: "Первая часть двусоставная («ветер дул» -> [ — = ]), вторая часть односоставная безличная («было тепло и уютно» -> [ = ])."
+                },
+                {
+                    id: "6_12", num: 12, type: "choice",
+                    question: "Какая характеристика соответствует предложению: «Светит яркое солнце, и весело журчат весенние ручьи»?",
+                    options: [
+                        "Простое, повествовательное, осложнённое однородными членами",
+                        "Сложное, бессоюзное, повествовательное",
+                        "Сложное, союзное, сложносочинённое, состоит из двух двусоставных распространённых частей",
+                        "Сложное, союзное, сложноподчинённое с придаточным времени"
+                    ],
+                    correctIndex: 2,
+                    explanation: "Обе части имеют и подлежащее, и сказуемое (двусоставные), а также второстепенные члены (распространённые), и связаны соединительным союзом «и»."
+                },
+                {
+                    id: "6_13", num: 13, type: "choice",
+                    question: "Укажите предложение, которое соответствует схеме: «[ = — ], но [ — = ].»",
+                    options: [
+                        "Дождь закончился, но тучи ещё не разошлись.",
+                        "Наступила весна, но по утрам ещё держались заморозки.",
+                        "Наступила весна, и прилетели скворцы.",
+                        "Солнце светит, но не греет."
+                    ],
+                    correctIndex: 1,
+                    explanation: "В предложении «Наступила весна, но по утрам ещё держались заморозки» в первой части сказуемое стоит перед подлежащим («наступила весна» -> [ = — ]), а во второй — [ = — ] или [ — = ] с противительным союзом «но» (единственный вариант с «но» и обратным порядком в 1-й части)."
+                },
+                {
+                    id: "6_14", num: 14, type: "choice",
+                    question: "Является ли сочинительный союз членом предложения при синтаксическом разборе ССП?",
+                    options: [
+                        "Да, он всегда является обстоятельством.",
+                        "Да, он входит в состав сказуемого второй части.",
+                        "Нет, союзы — служебные части речи и членами предложения не являются.",
+                        "Является только в том случае, если это союз «однако»."
+                    ],
+                    correctIndex: 2,
+                    explanation: "Союзы — это служебные части речи. Они связывают части сложного предложения, но членами предложения не являются и не подчёркиваются."
+                },
+                {
+                    id: "6_15", num: 15, type: "choice",
+                    question: "Выберите верную схему для предложения: «В парке тихо шелестела листва и звонко пели птицы».",
+                    options: [
+                        "[ = — ], и [ = — ].",
+                        "[ = — ] и [ = — ].",
+                        "[ — = ] и [ — = ].",
+                        "[ = — , и = — ]."
+                    ],
+                    correctIndex: 1,
+                    explanation: "Общий второстепенный член «В парке» отменяет запятую перед союзом «и», а в обеих частях сказуемые стоят перед подлежащими: [ = — ] и [ = — ]."
+                }
+            ]
+        };
+
+        // -------------------- 3. СОСТОЯНИЕ ПРИЛОЖЕНИЯ --------------------
+        let state = {
+            theme: 'dark',
+            currentUser: null,
+            authMode: 'login',
+            activeLessonId: 1,
+            completedLessons: [],
+            score: 0,
+            // Состояние практикума
+            practiceTopicId: 1,
+            practiceTypeFilter: 'all', // 'all' | 'fill' | 'match' | 'choice'
+            currentQIndex: 0,
+            userAnswers: {}, // { "1_1": { answered: bool, isCorrect: bool, ... } }
+            mascotTipIndex: 0
+        };
+
+        const mascotTips = [
+            "«Салют, девятиклассник! 👋 В 1-й четверти мы разбираем <strong>сложносочинённые предложения (ССП)</strong>. Выбирай тему, смотри видео и прокачивайся на 15 заданиях в каждом разделе!»",
+            "«Лайфхак №1: Видишь в начале предложения слово <em>«Утром»</em>, <em>«В саду»</em> или <em>«Зимой»</em>? Проверь, не относится ли оно сразу к двум частям ССП. Если да — запятая перед союзом <strong>И</strong> отменяется!»",
+            "«Лайфхак №2: Чтобы не спутать ССП и СПП, посмотри на союз. <em>И, А, НО, ОДНАКО, ИЛИ</em> — это сочинительные союзы (равноправные части). <em>ЧТО, КОГДА, ЕСЛИ, ПОТОМУ ЧТО</em> — подчинительные!»",
+            "«Лайфхак №3: В практикуме каждой темы сначала идут 5 заданий на вписывание, затем 5 на соотнесение и 5 тестов. Решай подряд или используй фильтр по типам!»"
+        ];
+
+        // -------------------- 4. ИНИЦИАЛИЗАЦИЯ И ПЕРЕКЛЮЧЕНИЕ ТЕМЫ --------------------
+        window.addEventListener('DOMContentLoaded', () => {
+            loadFromLocalStorage();
+            applyTheme(state.theme);
+            updateAuthHeaderUI();
+            renderLessonsSidebar();
+            renderActiveLesson();
+            renderPracticeWorkspace();
+        });
+
+        function applyTheme(themeName) {
+            state.theme = themeName === 'light' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', state.theme);
+
+            const sunIcon = document.getElementById('icon-sun');
+            const moonIcon = document.getElementById('icon-moon');
+            const themeLabel = document.getElementById('theme-label');
+
+            if (state.theme === 'light') {
+                if (sunIcon) sunIcon.classList.add('hidden');
+                if (moonIcon) moonIcon.classList.remove('hidden');
+                if (themeLabel) themeLabel.textContent = 'Тёмная';
+            } else {
+                if (sunIcon) sunIcon.classList.remove('hidden');
+                if (moonIcon) moonIcon.classList.add('hidden');
+                if (themeLabel) themeLabel.textContent = 'Светлая';
+            }
+        }
+
+        function toggleTheme() {
+            const nextTheme = state.theme === 'dark' ? 'light' : 'dark';
+            applyTheme(nextTheme);
+            saveToLocalStorage();
+        }
+
+        function loadFromLocalStorage() {
+            try {
+                const savedTheme = localStorage.getItem('syntax9_theme');
+                const savedUser = localStorage.getItem('syntax9_user');
+                const savedScore = localStorage.getItem('syntax9_score');
+                const savedLessons = localStorage.getItem('syntax9_completed_lessons');
+                const savedAnswers = localStorage.getItem('syntax9_practice_answers');
+
+                if (savedTheme) state.theme = savedTheme;
+                if (savedUser) state.currentUser = JSON.parse(savedUser);
+                if (savedScore) state.score = parseInt(savedScore, 10) || 0;
+                if (savedLessons) state.completedLessons = JSON.parse(savedLessons);
+                if (savedAnswers) state.userAnswers = JSON.parse(savedAnswers);
+
+                updateScoreUI();
+            } catch (e) {
+                console.warn('Ошибка чтения localStorage:', e);
+            }
+        }
+
+        function saveToLocalStorage() {
+            try {
+                localStorage.setItem('syntax9_theme', state.theme);
+                if (state.currentUser) {
+                    localStorage.setItem('syntax9_user', JSON.stringify(state.currentUser));
+                } else {
+                    localStorage.removeItem('syntax9_user');
+                }
+                localStorage.setItem('syntax9_score', state.score.toString());
+                localStorage.setItem('syntax9_completed_lessons', JSON.stringify(state.completedLessons));
+                localStorage.setItem('syntax9_practice_answers', JSON.stringify(state.userAnswers));
+            } catch (e) {
+                console.warn('Ошибка записи в localStorage:', e);
+            }
+        }
+
+        function updateScoreUI() {
+            const scoreEl = document.getElementById('header-score');
+            if (scoreEl) scoreEl.textContent = state.score;
+        }
+
+        // -------------------- 5. НАВИГАЦИЯ И АВТОРИЗАЦИЯ --------------------
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        function navigateToSection(sectionId) {
+            showMainView();
+            setTimeout(() => {
+                const el = document.getElementById(sectionId);
+                if (el) el.scrollIntoView({ behavior: 'smooth' });
+            }, 50);
+        }
+
+        function showAuthView(mode = 'login') {
+            document.getElementById('main-content-view').classList.add('hidden');
+            document.getElementById('auth-page-view').classList.remove('hidden');
+            switchAuthTab(mode);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function showMainView() {
+            document.getElementById('auth-page-view').classList.add('hidden');
+            document.getElementById('main-content-view').classList.remove('hidden');
+        }
+
+        function switchAuthTab(mode) {
+            state.authMode = mode;
+            const tabLogin = document.getElementById('tab-login');
+            const tabRegister = document.getElementById('tab-register');
+            const regFields = document.getElementById('register-fields');
+            const title = document.getElementById('auth-title');
+            const subtitle = document.getElementById('auth-subtitle');
+            const submitBtn = document.getElementById('auth-submit-btn');
+            const nameInput = document.getElementById('auth-name');
+            const alertBox = document.getElementById('auth-alert');
+
+            alertBox.classList.add('hidden');
+
+            if (mode === 'register') {
+                tabRegister.className = 'keep-white py-2.5 rounded-xl text-sm font-semibold transition-all bg-indigo-600 text-white shadow-md';
+                tabLogin.className = 'py-2.5 rounded-xl text-sm font-semibold transition-all text-slate-400 hover:text-white';
+                regFields.classList.remove('hidden');
+                nameInput.setAttribute('required', 'true');
+                title.textContent = 'Регистрация ученика';
+                subtitle.textContent = 'Создай профиль, чтобы отслеживать успехи по русскому языку';
+                submitBtn.textContent = 'Зарегистрироваться и начать';
+            } else {
+                tabLogin.className = 'keep-white py-2.5 rounded-xl text-sm font-semibold transition-all bg-indigo-600 text-white shadow-md';
+                tabRegister.className = 'py-2.5 rounded-xl text-sm font-semibold transition-all text-slate-400 hover:text-white';
+                regFields.classList.add('hidden');
+                nameInput.removeAttribute('required');
+                title.textContent = 'С возвращением!';
+                subtitle.textContent = 'Войди в свой профиль ученика 9 класса';
+                submitBtn.textContent = 'Войти в кабинет ученика';
+            }
+        }
+
+        function handleAuthSubmit(event) {
+            event.preventDefault();
+            const email = document.getElementById('auth-email').value.trim();
+            const password = document.getElementById('auth-password').value.trim();
+            const alertBox = document.getElementById('auth-alert');
+
+            if (!email || password.length < 4) {
+                alertBox.className = 'mb-4 p-3.5 rounded-xl text-sm font-medium border bg-rose-500/15 border-rose-500/30 text-rose-300';
+                alertBox.textContent = 'Пожалуйста, введи корректный email и пароль (минимум 4 символа).';
+                alertBox.classList.remove('hidden');
+                return;
+            }
+
+            if (state.authMode === 'register') {
+                const name = document.getElementById('auth-name').value.trim() || 'Ученик 9 класса';
+                const grade = document.getElementById('auth-grade').value;
+                const goal = document.getElementById('auth-goal').value;
+                state.currentUser = { name, email, grade, goal };
+            } else {
+                const extractedName = email.split('@')[0];
+                const formattedName = extractedName.charAt(0).toUpperCase() + extractedName.slice(1);
+                state.currentUser = {
+                    name: formattedName,
+                    email: email,
+                    grade: '9 класс',
+                    goal: 'СОР / СОЧ на 5'
+                };
+            }
+
+            saveToLocalStorage();
+            updateAuthHeaderUI();
+
+            const mascotSpeech = document.getElementById('mascot-speech');
+            if (mascotSpeech && state.currentUser) {
+                mascotSpeech.innerHTML = `«Рад знакомству, <strong>${escapeHtml(state.currentUser.name)}</strong> (${escapeHtml(state.currentUser.grade)})! 🎉 Твой прогресс по всем 90 заданиям сохраняется автоматически!»`;
+            }
+
+            showMainView();
+        }
+
+        function logoutUser() {
+            state.currentUser = null;
+            saveToLocalStorage();
+            updateAuthHeaderUI();
+        }
+
+        function updateAuthHeaderUI() {
+            const slot = document.getElementById('auth-header-slot');
+            if (!slot) return;
+
+            if (state.currentUser) {
+                const initial = state.currentUser.name.charAt(0).toUpperCase();
+                slot.innerHTML = `
+                    <div class="flex items-center gap-2 bg-slate-900/90 border border-indigo-400/25 pl-2 pr-2.5 py-1.5 rounded-2xl">
+                        <div class="keep-white w-8 h-8 rounded-xl bg-gradient-to-br from-indigo-500 to-cyan-500 flex items-center justify-center font-bold text-white text-sm">
+                            ${escapeHtml(initial)}
+                        </div>
+                        <div class="hidden sm:block text-left leading-tight">
+                            <div class="text-xs font-bold text-white">${escapeHtml(state.currentUser.name)}</div>
+                            <div class="text-[11px] text-cyan-400">${escapeHtml(state.currentUser.grade)}</div>
+                        </div>
+                        <button onclick="logoutUser()" title="Выйти из аккаунта" class="ml-1 p-1.5 rounded-lg text-slate-400 hover:text-rose-400 hover:bg-indigo-500/10 transition-colors">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                            </svg>
+                        </button>
+                    </div>
+                `;
+            } else {
+                slot.innerHTML = `
+                    <button onclick="showAuthView('login')" class="keep-white flex items-center gap-2 px-3.5 sm:px-4 py-2.5 rounded-xl bg-gradient-to-r from-indigo-600 to-cyan-600 hover:from-indigo-500 hover:to-cyan-500 text-white text-sm font-semibold shadow-lg shadow-indigo-600/25 transition-all active:scale-95">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                        </svg>
+                        <span class="hidden sm:inline">Вход / Регистрация</span>
+                        <span class="sm:hidden">Войти</span>
+                    </button>
+                `;
+            }
+        }
+
+        function nextMascotTip() {
+            state.mascotTipIndex = (state.mascotTipIndex + 1) % mascotTips.length;
+            const speechEl = document.getElementById('mascot-speech');
+            if (speechEl) {
+                speechEl.innerHTML = mascotTips[state.mascotTipIndex];
+            }
+        }
+
+        // -------------------- 6. РЕНДЕР УРОКОВ И ВИДЕО --------------------
+        function renderLessonsSidebar() {
+            const navList = document.getElementById('lessons-nav-list');
+            const badge = document.getElementById('completed-lessons-badge');
+            if (!navList) return;
+
+            badge.textContent = `${state.completedLessons.length} / ${lessonsData.length}`;
+
+            navList.innerHTML = lessonsData.map(lesson => {
+                const isActive = lesson.id === state.activeLessonId;
+                const isDone = state.completedLessons.includes(lesson.id);
+
+                return `
+                    <button onclick="selectLesson(${lesson.id})" class="w-full text-left p-4 rounded-2xl border transition-all flex items-start justify-between gap-3 ${
+                        isActive 
+                        ? 'bg-gradient-to-r from-indigo-600/20 to-cyan-600/15 border-indigo-400/60 shadow-md' 
+                        : 'glass-card border-white/5 hover:border-indigo-400/30'
+                    }">
+                        <div class="space-y-1">
+                            <div class="flex items-center gap-2">
+                                <span class="text-xs font-mono font-bold ${isActive ? 'text-cyan-400' : 'text-slate-400'}">${lesson.number}</span>
+                                ${lesson.hasVideo ? `
+                                    <span class="inline-flex items-center gap-1 text-[10px] font-semibold px-2 py-0.5 rounded-md bg-rose-500/20 text-rose-300 border border-rose-500/25">
+                                        ▶ Видео
+                                    </span>
+                                ` : ''}
+                            </div>
+                            <div class="font-bold text-sm sm:text-base ${isActive ? 'text-white' : 'text-slate-200'}">
+                                ${lesson.shortTitle}
+                            </div>
+                            <div class="text-xs text-slate-400">${lesson.duration}</div>
+                        </div>
+
+                        <div class="shrink-0 mt-1">
+                            ${isDone 
+                                ? `<span class="w-6 h-6 rounded-full bg-emerald-500/20 border border-emerald-400/40 text-emerald-400 flex items-center justify-center text-xs font-bold" title="Тема изучена">✓</span>`
+                                : `<span class="w-6 h-6 rounded-full bg-slate-800 border border-white/10 text-slate-500 flex items-center justify-center text-xs">${lesson.id}</span>`
+                            }
+                        </div>
+                    </button>
+                `;
+            }).join('');
+        }
+
+        function selectLesson(lessonId) {
+            state.activeLessonId = lessonId;
+            renderLessonsSidebar();
+            renderActiveLesson();
+        }
+
+        function markLessonCompleted(lessonId) {
+            if (!state.completedLessons.includes(lessonId)) {
+                state.completedLessons.push(lessonId);
+                state.score += 15;
+                updateScoreUI();
+                saveToLocalStorage();
+                renderLessonsSidebar();
+                renderActiveLesson();
+            }
+        }
+
+        function renderActiveLesson() {
+            const container = document.getElementById('lesson-content-card');
+            const lesson = lessonsData.find(l => l.id === state.activeLessonId) || lessonsData[0];
+            const isCompleted = state.completedLessons.includes(lesson.id);
+
+            let videoHtml = '';
+            if (lesson.hasVideo) {
+                const searchUrl = `https://www.youtube.com/results?search_query=${encodeURIComponent(lesson.videoFallbackQuery)}`;
+                videoHtml = `
+                    <div class="my-7 p-4 sm:p-5 rounded-2xl bg-slate-950/80 border border-rose-500/25">
+                        <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+                            <div class="flex items-center gap-2">
+                                <span class="keep-white w-7 h-7 rounded-lg bg-rose-600 text-white flex items-center justify-center text-xs font-bold">▶</span>
+                                <h4 class="font-bold text-sm sm:text-base text-white">${lesson.videoTitle}</h4>
+                            </div>
+                            <a href="${searchUrl}" target="_blank" rel="noopener noreferrer" class="text-xs text-cyan-400 hover:underline font-medium">
+                                Открыть на YouTube ↗
+                            </a>
+                        </div>
+                        <div class="relative w-full aspect-video rounded-xl overflow-hidden bg-slate-900 border border-white/10">
+                            <iframe 
+                                class="w-full h-full"
+                                src="https://www.youtube-nocookie.com/embed/${lesson.youtubeId}?rel=0" 
+                                title="${lesson.videoTitle}"
+                                frameborder="0" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                allowfullscreen>
+                            </iframe>
+                        </div>
+                        <p class="text-xs text-slate-400 mt-2.5">
+                            Если видео недоступно в школьной сети, используй кнопку «Открыть на YouTube» справа сверху.
+                        </p>
+                    </div>
+                `;
+            }
+
+            const blocksHtml = lesson.blocks.map(block => {
+                if (block.isTip) {
+                    return `
+                        <div class="p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-indigo-500/15 to-cyan-500/15 border border-cyan-400/30 my-5">
+                            <div class="flex items-center gap-2 font-bold text-cyan-300 text-sm mb-1.5">
+                                <span>💡</span>
+                                <span>${block.heading}</span>
+                            </div>
+                            <p class="text-sm text-slate-200 leading-relaxed">${block.text}</p>
+                        </div>
+                    `;
+                }
+
+                return `
+                    <div class="space-y-2.5 py-3 border-b border-white/5 last:border-none">
+                        <h3 class="text-lg font-bold text-white">${block.heading}</h3>
+                        <p class="text-slate-300 text-sm sm:text-base leading-relaxed">${block.text}</p>
+                        ${block.example ? `
+                            <div class="p-3.5 rounded-xl bg-slate-950/75 border-l-4 border-indigo-500 text-sm text-slate-200 leading-relaxed">
+                                <div class="text-[11px] font-mono uppercase text-indigo-400 mb-1">Наглядный пример:</div>
+                                ${block.example}
+                            </div>
+                        ` : ''}
+                        ${block.list ? `
+                            <ul class="space-y-2 pt-1">
+                                ${block.list.map(item => `
+                                    <li class="flex items-start gap-2.5 text-sm sm:text-base text-slate-300">
+                                        <span class="text-cyan-400 mt-1">•</span>
+                                        <span>${item}</span>
+                                    </li>
+                                `).join('')}
+                            </ul>
+                        ` : ''}
+                    </div>
+                `;
+            }).join('');
+
+            container.innerHTML = `
+                <div class="flex flex-wrap items-center justify-between gap-2 pb-4 border-b border-white/10">
+                    <span class="px-3 py-1 rounded-lg bg-indigo-500/20 text-indigo-300 font-mono text-xs font-bold">
+                        ${lesson.number} • ${lesson.duration}
+                    </span>
+                    ${lesson.hasVideo 
+                        ? `<span class="text-xs text-rose-300 font-medium">Урок с видеоразбором</span>`
+                        : `<span class="text-xs text-slate-400">Текстовый конспект со схемами</span>`
+                    }
+                </div>
+
+                <h2 class="text-2xl sm:text-3xl font-extrabold text-white mt-4">${lesson.title}</h2>
+                <p class="text-slate-400 text-sm sm:text-base mt-2 leading-relaxed">${lesson.summary}</p>
+
+                ${videoHtml}
+
+                <div class="mt-5 space-y-2">
+                    ${blocksHtml}
+                </div>
+
+                <div class="mt-8 pt-5 border-t border-white/10 flex flex-wrap items-center justify-between gap-4">
+                    <button onclick="markLessonCompleted(${lesson.id})" class="${isCompleted ? '' : 'keep-white'} px-5 py-3 rounded-xl font-bold text-sm transition-all flex items-center gap-2 ${
+                        isCompleted 
+                        ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 cursor-default' 
+                        : 'bg-emerald-600 hover:bg-emerald-500 text-white shadow-lg shadow-emerald-600/25'
+                    }">
+                        <span>${isCompleted ? '✓ Тема изучена (+15 баллов)' : 'Отметить тему изученной (+15 баллов)'}</span>
+                    </button>
+
+                    <button onclick="jumpToTopicPractice(${lesson.id})" class="px-4 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-cyan-300 text-sm font-semibold border border-white/10 transition-colors">
+                        Решить 15 заданий по этой теме →
+                    </button>
+                </div>
+            `;
+        }
+
+        function jumpToTopicPractice(topicId) {
+            const selectEl = document.getElementById('practice-topic-select');
+            if (selectEl) {
+                selectEl.value = topicId.toString();
+            }
+            selectPracticeTopic(topicId);
+            navigateToSection('practice-section');
+        }
+
+        // -------------------- 7. ИНТЕРАКТИВНЫЙ ПРАКТИКУМ (15 ЗАДАНИЙ НА ТЕМУ) --------------------
+        function getFilteredQuestionsForCurrentTopic() {
+            const allInTopic = topicPracticeBank[state.practiceTopicId] || [];
+            if (state.practiceTypeFilter === 'all') return allInTopic;
+            return allInTopic.filter(q => q.type === state.practiceTypeFilter);
+        }
+
+        function selectPracticeTopic(topicId) {
+            state.practiceTopicId = parseInt(topicId, 10) || 1;
+            state.currentQIndex = 0;
+            renderPracticeWorkspace();
+        }
+
+        function setPracticeTypeFilter(filterType) {
+            state.practiceTypeFilter = filterType;
+            state.currentQIndex = 0;
+
+            document.querySelectorAll('.filter-pill').forEach(btn => {
+                if (btn.getAttribute('data-filter') === filterType) {
+                    btn.className = 'filter-pill px-3.5 py-2 rounded-xl text-xs font-bold transition-all bg-indigo-600 text-white keep-white';
+                } else {
+                    btn.className = 'filter-pill px-3.5 py-2 rounded-xl text-xs font-semibold transition-all bg-slate-800/80 text-slate-300 border border-white/10';
+                }
+            });
+
+            renderPracticeWorkspace();
+        }
+
+        function jumpToQuestionIndex(idx) {
+            state.currentQIndex = idx;
+            renderPracticeWorkspace();
+        }
+
+        function renderPracticeWorkspace() {
+            const allInTopic = topicPracticeBank[state.practiceTopicId] || [];
+            const visibleList = getFilteredQuestionsForCurrentTopic();
+            if (visibleList.length === 0) return;
+
+            if (state.currentQIndex >= visibleList.length) {
+                state.currentQIndex = 0;
+            }
+
+            const currentQ = visibleList[state.currentQIndex];
+            const ansRecord = state.userAnswers[currentQ.id] || { answered: false };
+
+            // Подсчёт статистики по текущей теме (из 15)
+            let topicCorrect = 0;
+            let topicWrong = 0;
+            allInTopic.forEach(q => {
+                const rec = state.userAnswers[q.id];
+                if (rec && rec.answered) {
+                    if (rec.isCorrect) topicCorrect++;
+                    else topicWrong++;
+                }
+            });
+
+            const masteryBadge = document.getElementById('topic-mastery-badge');
+            if (masteryBadge) {
+                masteryBadge.textContent = `Решено в теме: ${topicCorrect + topicWrong} / 15`;
+            }
+
+            // Рендер кнопок быстрого перехода по номерам (1..15)
+            const pillsGrid = document.getElementById('question-pills-grid');
+            if (pillsGrid) {
+                pillsGrid.innerHTML = visibleList.map((q, idx) => {
+                    const rec = state.userAnswers[q.id];
+                    const isCurrent = idx === state.currentQIndex;
+                    let pillStyle = 'bg-slate-800/70 text-slate-300 border-white/10';
+
+                    if (rec && rec.answered) {
+                        pillStyle = rec.isCorrect
+                            ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40'
+                            : 'bg-rose-500/20 text-rose-300 border-rose-500/40';
+                    }
+                    if (isCurrent) {
+                        pillStyle += ' ring-2 ring-indigo-500 font-extrabold';
+                    }
+
+                    return `
+                        <button onclick="jumpToQuestionIndex(${idx})" class="w-8 h-8 rounded-lg border text-xs font-mono transition-all ${pillStyle}" title="Задание №${q.num}">
+                            ${q.num}
+                        </button>
+                    `;
+                }).join('');
+            }
+
+            // Обновление счётчиков и прогресс-бара
+            document.getElementById('practice-counter').textContent = `Задание №${currentQ.num} (${state.currentQIndex + 1} из ${visibleList.length})`;
+            document.getElementById('practice-stats').textContent = `Верно в теме: ${topicCorrect} | Ошибок: ${topicWrong}`;
+            document.getElementById('practice-progress-bar').style.width = `${((state.currentQIndex + 1) / visibleList.length) * 100}%`;
+
+            const prevBtn = document.getElementById('prev-q-btn');
+            const nextBtn = document.getElementById('next-q-btn');
+            prevBtn.disabled = state.currentQIndex === 0;
+            nextBtn.textContent = state.currentQIndex === visibleList.length - 1 ? 'К первому в списке ↺' : 'Следующее задание →';
+
+            // Бейдж типа задания
+            let typeBadgeHtml = '';
+            if (currentQ.type === 'fill') {
+                typeBadgeHtml = `<span class="text-xs font-mono font-bold px-2.5 py-1 rounded-lg bg-cyan-500/15 text-cyan-300 border border-cyan-400/25">Задание №${currentQ.num} • Вписать ответ</span>`;
+            } else if (currentQ.type === 'match') {
+                typeBadgeHtml = `<span class="text-xs font-mono font-bold px-2.5 py-1 rounded-lg bg-amber-500/15 text-amber-400 border border-amber-400/25">Задание №${currentQ.num} • Соотнести пары</span>`;
+            } else {
+                typeBadgeHtml = `<span class="text-xs font-mono font-bold px-2.5 py-1 rounded-lg bg-purple-500/15 text-purple-300 border border-purple-400/25">Задание №${currentQ.num} • Тестовое</span>`;
+            }
+
+            let bodyHtml = '';
+
+            // --- ТИП 1: ВПИСАТЬ ОТВЕТ (1-5) ---
+            if (currentQ.type === 'fill') {
+                const userTyped = ansRecord.typedValue || '';
+                let inputExtraStyle = '';
+                if (ansRecord.answered) {
+                    inputExtraStyle = ansRecord.isCorrect
+                        ? 'border-emerald-400 bg-emerald-500/15 text-emerald-300'
+                        : 'border-rose-400 bg-rose-500/15 text-rose-300';
+                }
+
+                bodyHtml = `
+                    <div class="mt-5 p-5 sm:p-6 rounded-2xl bg-slate-950/85 border border-white/10 text-base sm:text-lg leading-loose text-white font-medium">
+                        <span>${escapeHtml(currentQ.before)}</span><input 
+                            type="text" 
+                            id="fill-answer-input" 
+                            value="${escapeHtml(userTyped)}"
+                            placeholder="${escapeHtml(currentQ.placeholder || 'ответ')}"
+                            ${ansRecord.answered ? 'disabled' : ''}
+                            onkeydown="if(event.key==='Enter'){ event.preventDefault(); checkFillAnswer('${currentQ.id}'); }"
+                            class="inline-gap-input ${inputExtraStyle}"
+                        /><span>${escapeHtml(currentQ.after)}</span>
+                    </div>
+
+                    ${!ansRecord.answered ? `
+                        <div class="mt-4 flex flex-wrap items-center gap-3">
+                            <button onclick="checkFillAnswer('${currentQ.id}')" class="keep-white px-6 py-3 rounded-xl bg-gradient-to-r from-indigo-600 to-cyan-600 hover:from-indigo-500 hover:to-cyan-500 text-white font-bold text-sm shadow-lg transition-all">
+                                Проверить ответ
+                            </button>
+                            <span class="text-xs text-slate-400">Впиши ответ в поле внутри предложения и нажми «Проверить» (или Enter)</span>
+                        </div>
+                    ` : `
+                        <div class="mt-3 text-xs sm:text-sm text-slate-300">
+                            Эталонный ответ: <span class="font-mono font-bold text-emerald-400 px-2 py-0.5 rounded bg-emerald-500/15">${escapeHtml(currentQ.answers[0])}</span>
+                        </div>
+                    `}
+                `;
+            }
+
+            // --- ТИП 2: СООТНЕСТИ (6-10) ---
+            else if (currentQ.type === 'match') {
+                // Детерминированно перемешиваем правые варианты для выбора
+                const rightOptions = getShuffledRightOptions(currentQ);
+                const selectedMap = ansRecord.selectedMap || {};
+
+                bodyHtml = `
+                    <div class="mt-5 space-y-3">
+                        ${currentQ.pairs.map((pair, pIdx) => {
+                            const chosenVal = selectedMap[pIdx] || '';
+                            let rowBorder = 'border-white/10 bg-slate-950/75';
+                            let statusIcon = '';
+
+                            if (ansRecord.answered) {
+                                const isPairRight = chosenVal === pair.right;
+                                rowBorder = isPairRight
+                                    ? 'border-emerald-400/60 bg-emerald-500/10'
+                                    : 'border-rose-400/60 bg-rose-500/10';
+                                statusIcon = isPairRight
+                                    ? `<span class="text-xs font-bold text-emerald-400">✓ Верно</span>`
+                                    : `<span class="text-xs font-bold text-rose-300">✕ Верно: ${escapeHtml(pair.right)}</span>`;
+                            }
+
+                            return `
+                                <div class="p-4 rounded-xl border ${rowBorder} grid grid-cols-1 md:grid-cols-12 gap-3 items-center">
+                                    <div class="md:col-span-6 text-sm sm:text-base font-medium text-white flex items-start gap-2.5">
+                                        <span class="w-6 h-6 rounded-md bg-indigo-500/20 text-indigo-300 font-mono text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">${pIdx + 1}</span>
+                                        <span>${escapeHtml(pair.left)}</span>
+                                    </div>
+                                    <div class="md:col-span-6 space-y-1.5">
+                                        <select 
+                                            onchange="updateMatchSelection('${currentQ.id}', ${pIdx}, this.value)"
+                                            ${ansRecord.answered ? 'disabled' : ''}
+                                            class="theme-input w-full px-3.5 py-2.5 rounded-xl border text-xs sm:text-sm font-medium focus:outline-none focus:border-indigo-500"
+                                        >
+                                            <option value="">— Выберите соответствие —</option>
+                                            ${rightOptions.map(opt => `
+                                                <option value="${escapeHtml(opt)}" ${chosenVal === opt ? 'selected' : ''}>${escapeHtml(opt)}</option>
+                                            `).join('')}
+                                        </select>
+                                        ${statusIcon ? `<div>${statusIcon}</div>` : ''}
+                                    </div>
+                                </div>
+                            `;
+                        }).join('')}
+                    </div>
+
+                    ${!ansRecord.answered ? `
+                        <div class="mt-4 flex flex-wrap items-center gap-3">
+                            <button onclick="checkMatchAnswer('${currentQ.id}')" class="keep-white px-6 py-3 rounded-xl bg-gradient-to-r from-indigo-600 to-cyan-600 hover:from-indigo-500 hover:to-cyan-500 text-white font-bold text-sm shadow-lg transition-all">
+                                Проверить соотнесение
+                            </button>
+                            <span id="match-warn-${currentQ.id}" class="text-xs text-amber-400 hidden">Пожалуйста, выбери соответствие для каждой строки!</span>
+                        </div>
+                    ` : ''}
+                `;
+            }
+
+            // --- ТИП 3: ТЕСТОВЫЕ ЗАДАНИЯ (11-15) ---
+            else if (currentQ.type === 'choice') {
+                bodyHtml = `
+                    <div class="space-y-3 mt-4">
+                        ${currentQ.options.map((opt, idx) => {
+                            let btnClass = 'bg-slate-800/70 hover:bg-slate-800 border-white/10 text-slate-200';
+                            let badge = `<span class="w-7 h-7 rounded-lg bg-slate-900 border border-white/10 flex items-center justify-center text-xs font-mono text-slate-400 shrink-0">${idx + 1}</span>`;
+
+                            if (ansRecord.answered) {
+                                if (idx === currentQ.correctIndex) {
+                                    btnClass = 'bg-emerald-500/20 border-emerald-400 text-white';
+                                    badge = `<span class="keep-white w-7 h-7 rounded-lg bg-emerald-500 text-white flex items-center justify-center text-xs font-bold shrink-0">✓</span>`;
+                                } else if (idx === ansRecord.selectedOption && !ansRecord.isCorrect) {
+                                    btnClass = 'bg-rose-500/20 border-rose-400 text-rose-200';
+                                    badge = `<span class="keep-white w-7 h-7 rounded-lg bg-rose-500 text-white flex items-center justify-center text-xs font-bold shrink-0">✕</span>`;
+                                } else {
+                                    btnClass = 'bg-slate-900/40 border-white/5 text-slate-500 opacity-70';
+                                }
+                            }
+
+                            return `
+                                <button onclick="submitChoiceAnswer('${currentQ.id}', ${idx})" ${ansRecord.answered ? 'disabled' : ''} class="w-full text-left p-4 rounded-xl border transition-all flex items-center gap-3.5 ${btnClass}">
+                                    ${badge}
+                                    <span class="text-sm sm:text-base font-medium">${escapeHtml(opt)}</span>
+                                </button>
+                            `;
+                        }).join('')}
+                    </div>
+                `;
+            }
+
+            // Блок пояснения ошибки / правильного ответа
+            let feedbackHtml = '';
+            if (ansRecord.answered) {
+                feedbackHtml = `
+                    <div class="mt-6 p-5 rounded-2xl border ${
+                        ansRecord.isCorrect 
+                        ? 'bg-emerald-500/10 border-emerald-500/35' 
+                        : 'bg-rose-500/10 border-rose-500/35'
+                    }">
+                        <div class="flex items-center gap-2 font-bold text-base mb-2 ${
+                            ansRecord.isCorrect ? 'text-emerald-300' : 'text-rose-300'
+                        }">
+                            <span>${ansRecord.isCorrect ? '🎉 Отлично! Задание выполнено верно (+10 баллов)' : '🔍 Есть ошибка — давай разберём правило!'}</span>
+                        </div>
+                        <p class="text-sm sm:text-base text-slate-200 leading-relaxed">
+                            <strong class="text-white">Пояснение:</strong> ${currentQ.explanation}
+                        </p>
+                    </div>
+                `;
+            }
+
+            const titleText = currentQ.type === 'choice' ? currentQ.question : currentQ.prompt;
+
+            document.getElementById('quiz-workspace').innerHTML = `
+                <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+                    ${typeBadgeHtml}
+                    <span class="text-xs text-slate-400 font-medium">Тема ${state.practiceTopicId} из 6</span>
+                </div>
+                <h3 class="text-lg sm:text-xl font-bold text-white leading-snug">${escapeHtml(titleText)}</h3>
+                ${bodyHtml}
+                ${feedbackHtml}
+            `;
+        }
+
+        function getShuffledRightOptions(q) {
+            const list = q.pairs.map(p => p.right);
+            // Детерминированный сдвиг по id, чтобы порядок отличался от левой колонки, но не прыгал при перерисовке
+            const shift = (q.num % (list.length - 1 || 1)) + 1;
+            return list.map((_, idx) => list[(idx + shift) % list.length]);
+        }
+
+        function findQuestionById(qId) {
+            const topicId = parseInt(qId.split('_')[0], 10);
+            const list = topicPracticeBank[topicId] || [];
+            return list.find(item => item.id === qId);
+        }
+
+        // Проверка типа 1: Вписать ответ
+        function checkFillAnswer(qId) {
+            const q = findQuestionById(qId);
+            if (!q || (state.userAnswers[qId] && state.userAnswers[qId].answered)) return;
+
+            const inputEl = document.getElementById('fill-answer-input');
+            const rawVal = inputEl ? inputEl.value : '';
+            const normalized = rawVal.trim().toLowerCase().replace(/\s+/g, ' ');
+
+            if (!normalized) {
+                if (inputEl) inputEl.focus();
+                return;
+            }
+
+            const isCorrect = q.answers.some(ans => ans.toLowerCase() === normalized);
+
+            state.userAnswers[qId] = {
+                answered: true,
+                isCorrect: isCorrect,
+                typedValue: rawVal.trim()
+            };
+
+            if (isCorrect) {
+                state.score += 10;
+                updateScoreUI();
+            }
+            saveToLocalStorage();
+            renderPracticeWorkspace();
+        }
+
+        // Обновление выбора в типе 2: Соотнести
+        function updateMatchSelection(qId, pairIndex, value) {
+            if (!state.userAnswers[qId]) {
+                state.userAnswers[qId] = { answered: false, selectedMap: {} };
+            }
+            if (state.userAnswers[qId].answered) return;
+            if (!state.userAnswers[qId].selectedMap) {
+                state.userAnswers[qId].selectedMap = {};
+            }
+            state.userAnswers[qId].selectedMap[pairIndex] = value;
+        }
+
+        // Проверка типа 2: Соотнести
+        function checkMatchAnswer(qId) {
+            const q = findQuestionById(qId);
+            if (!q || (state.userAnswers[qId] && state.userAnswers[qId].answered)) return;
+
+            const selectedMap = (state.userAnswers[qId] && state.userAnswers[qId].selectedMap) || {};
+            // Проверяем, что выбраны все строки
+            for (let i = 0; i < q.pairs.length; i++) {
+                if (!selectedMap[i]) {
+                    const warnEl = document.getElementById(`match-warn-${qId}`);
+                    if (warnEl) warnEl.classList.remove('hidden');
+                    return;
+                }
+            }
+
+            let allCorrect = true;
+            for (let i = 0; i < q.pairs.length; i++) {
+                if (selectedMap[i] !== q.pairs[i].right) {
+                    allCorrect = false;
+                    break;
+                }
+            }
+
+            state.userAnswers[qId] = {
+                answered: true,
+                isCorrect: allCorrect,
+                selectedMap: selectedMap
+            };
+
+            if (allCorrect) {
+                state.score += 10;
+                updateScoreUI();
+            }
+            saveToLocalStorage();
+            renderPracticeWorkspace();
+        }
+
+        // Проверка типа 3: Тестовые
+        function submitChoiceAnswer(qId, optionIdx) {
+            const q = findQuestionById(qId);
+            if (!q || (state.userAnswers[qId] && state.userAnswers[qId].answered)) return;
+
+            const isCorrect = optionIdx === q.correctIndex;
+            state.userAnswers[qId] = {
+                answered: true,
+                isCorrect: isCorrect,
+                selectedOption: optionIdx
+            };
+
+            if (isCorrect) {
+                state.score += 10;
+                updateScoreUI();
+            }
+            saveToLocalStorage();
+            renderPracticeWorkspace();
+        }
+
+        function prevQuestion() {
+            if (state.currentQIndex > 0) {
+                state.currentQIndex--;
+                renderPracticeWorkspace();
+            }
+        }
+
+        function nextQuestion() {
+            const visibleList = getFilteredQuestionsForCurrentTopic();
+            if (state.currentQIndex < visibleList.length - 1) {
+                state.currentQIndex++;
+            } else {
+                state.currentQIndex = 0;
+            }
+            renderPracticeWorkspace();
+        }
+
+        function resetTopicPractice() {
+            const allInTopic = topicPracticeBank[state.practiceTopicId] || [];
+            allInTopic.forEach(q => {
+                delete state.userAnswers[q.id];
+            });
+            state.currentQIndex = 0;
+            saveToLocalStorage();
+            renderPracticeWorkspace();
+        }
+
+        // Утилита экранирования HTML для безопасности пользовательского ввода
+        function escapeHtml(text) {
+            if (text === null || text === undefined) return '';
+            const div = document.createElement('div');
+            div.textContent = String(text);
+            return div.innerHTML;
+        }
+    </script>
+</body>
+</html>
